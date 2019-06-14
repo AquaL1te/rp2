@@ -5,7 +5,7 @@ import re
 import urllib3
 
 
-class PID2NDN object(self):
+class PID2NDN(object):
     def __init__(self, pid):
         self.pid = pid
 
