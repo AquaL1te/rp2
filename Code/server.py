@@ -1,8 +1,8 @@
-  GNU nano 2.9.3                                                                                    server.py                                                                                               
+#!/usr/bin/python
 
 import socket
 
-def Main():
+def main():
     host = "145.100.104.119"
     port = 8888
 
@@ -24,8 +24,5 @@ def Main():
 
     conn.close()
 
-if __name__ == '__main__':
-    Main()
-
-#str_data dmv PyNDN oid doorsturen
-
+if __name__ == "__main__":
+    main()
