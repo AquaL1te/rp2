@@ -1,0 +1,12 @@
+version: "0.1"
+services:
+  ndn-router:
+    build:
+      context: ./router
+    container_name: ndn-router1
+    ports:
+      - "6363:6363"
+#  ndn-client:
+#    build:
+#      context: ./client
+#    container_name: ndn-client1
