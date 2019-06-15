@@ -30,10 +30,17 @@ class PID2NDN(object):
         pass
 
 
+def send_ndn(host, port, ndn):
+    mySocket = socket.socket()
+    mySocket.connect((host,port))
+    mySocket.send(ndn.encode())
+    data = mySocket.recv(1024).decode()
+    mySocket.close()
+
+
 def main():
         host = "145.100.104.119"
         port = 8888
-
         pid = input("Please enter an pid:")
 
         regexp_handle = re.compile(r"\b(\d+\.*)+[\/](([^\s\.])+\.*)+\b")
@@ -46,11 +53,9 @@ def main():
         elif regexp_ndn.match(pid):
             ndn = pid2ndn.something2ndn()
 
-        mySocket = socket.socket()
-        mySocket.connect((host,port))
-        mySocket.send(ndn.encode())
-        data = mySocket.recv(1024).decode()
-        mySocket.close()
+        if ndn:
+            send_ndn(host, port, ndn)
+
 
 if __name__ == "__main__":
     main()
