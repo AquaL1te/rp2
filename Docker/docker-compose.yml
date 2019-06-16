@@ -2,18 +2,16 @@ version: "0.1"
 
 services:
   ndn-router:
-    image: ndn-router
-    build:
-      context: ./router
-      dockerfile: Dockerfile
+    build: ./router
     container_name: ndn-router1
+    hostname: ndn-router1
     ports:
       - 6363:6363
     volumes:
       - /srv/ndn/router:/srv/ndn
   ndn-client:
-    image: ndn-client
     build: ./client
     container_name: ndn-client1
+    hostname: ndn-client1
     volumes:
       - /srv/ndn/client:/srv/ndn

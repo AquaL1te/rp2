@@ -61,19 +61,21 @@ RUN dnf -y remove libpcap-devel
 # Dependencies for runtime
 RUN dnf -y install boost
 
-# NDN customization
-# TODO: Run NDN as non-root, binaries need special capabilities e.g. CAP_NET_ADMIN
-#RUN useradd -rs /bin/false ndn
-RUN mkdir -vp /usr/local/etc/ndn/certs
-RUN ndnsec-keygen /os3 | ndnsec-install-cert -
-RUN ndnsec-cert-dump -i /os3 > /usr/local/etc/ndn/certs/os3.ndncert
-COPY nfd.conf /usr/local/etc/ndn/nfd.conf
-COPY nfd.conf.example /usr/local/etc/ndn/nfd.conf.example
-
 # For interactive troubleshooting
 RUN dnf -y install vim
 RUN dnf -y install iproute
 RUN dnf -y install man
 RUN mandb
 
+# NDN customization
+# TODO: Run NDN as non-root, binaries need special capabilities e.g. CAP_NET_ADMIN
+#RUN useradd -rs /bin/false ndn
 WORKDIR /root
+RUN mkdir -vp /usr/local/etc/ndn/certs
+RUN ndnsec-keygen /os3 | ndnsec-install-cert -
+RUN ndnsec-cert-dump -i /os3 > /usr/local/etc/ndn/certs/os3.ndncert
+COPY nfd.conf /usr/local/etc/ndn/nfd.conf
+COPY nfd.conf.example /usr/local/etc/ndn/nfd.conf.example
+COPY docker-entrypoint.sh /root/docker-entrypoint.sh
+
+ENTRYPOINT /root/docker-entrypoint.sh
