@@ -1,6 +1,6 @@
 FROM fedora:30
 
-MAINTAINER Kees de Jong "kees.dejong@os3.nl"
+MAINTAINER Kees de Jong "keesdejong@fedoraproject.org"
 
 # Update system
 RUN dnf -y update --refresh
@@ -17,8 +17,6 @@ RUN dnf -y install libcap-devel
 RUN dnf -y install libpcap-devel
 
 # Install additional packages
-RUN dnf -y install vim
-RUN dnf -y install sudo
 RUN dnf -y install git
 
 # Clone repos
@@ -33,16 +31,16 @@ RUN ./waf configure
 RUN ./waf
 RUN ./waf install
 RUN ./waf docs
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+RUN echo "/usr/local/lib64" > /etc/ld.so.conf.d/ndn-cxx.conf
 RUN ldconfig
 
 # Build NFD from source
 WORKDIR /root/NFD
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 RUN ./waf configure
 RUN ./waf
 RUN ./waf install
 RUN ./waf docs
-RUN echo "/usr/local/lib64" > /etc/ld.so.conf.d/ndn-cxx.conf
 RUN ldconfig
 
 # Build NDN-tools
@@ -52,6 +50,17 @@ RUN ./waf
 RUN ./waf install
 RUN ldconfig
 
+# Clean up image
+RUN dnf -y remove gcc-g++ 
+RUN dnf -y remove sqlite-devel
+RUN dnf -y remove boost-devel
+RUN dnf -y remove openssl-devel
+RUN dnf -y remove libcap-devel
+RUN dnf -y remove libpcap-devel
+
+# Dependencies for runtime
+RUN dnf -y install boost
+
 # NDN customization
 # TODO: Run NDN as non-root, binaries need special capabilities e.g. CAP_NET_ADMIN
 #RUN useradd -rs /bin/false ndn
@@ -60,5 +69,11 @@ RUN ndnsec-keygen /os3 | ndnsec-install-cert -
 RUN ndnsec-cert-dump -i /os3 > /usr/local/etc/ndn/certs/os3.ndncert
 COPY nfd.conf /usr/local/etc/ndn/nfd.conf
 COPY nfd.conf.example /usr/local/etc/ndn/nfd.conf.example
+
+# For interactive troubleshooting
+RUN dnf -y install vim
+RUN dnf -y install iproute
+RUN dnf -y install man
+RUN mandb
 
 WORKDIR /root
