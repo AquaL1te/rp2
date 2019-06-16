@@ -1,6 +1,9 @@
-version: "0.1"
+version: "3"
 
 services:
+  ndn-base-image:
+    build: ./base
+    container_name: ndnbase
   ndn-router:
     build: ./router
     container_name: ndn-router1
