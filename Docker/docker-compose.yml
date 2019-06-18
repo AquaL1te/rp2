@@ -10,11 +10,14 @@ services:
     hostname: ndn-router1
     ports:
       - 6363:6363
-    volumes:
-      - /srv/ndn/router:/srv/ndn
+      - 8080:8080
   ndn-client:
     build: ./client
     container_name: ndn-client1
     hostname: ndn-client1
-    volumes:
-      - /srv/ndn/client:/srv/ndn
+    ports:
+      - 8081:8080
+    depends_on:
+      - ndn-router
+    environment:
+      - gateway=ndn-router1

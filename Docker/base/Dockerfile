@@ -6,46 +6,51 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
 RUN dnf -y update --refresh; \
   dnf -y install \
-    boost \
     boost-devel \
     doxygen \
     gcc-g++ \
     git \
     graphviz \
-    iproute \
     libcap-devel \
     libpcap-devel \
-    man \
     openssl-devel \
     python-sphinx \
-    sqlite-devel \
-    vim; \
-  mandb; \
-  mkdir -p /ndn; \
-  cd /ndn; \
+    sqlite-devel; \
+  cd /root; \
   git clone https://github.com/named-data/ndn-cxx; \
-  cd /ndn/ndn-cxx; \
+  cd /root/ndn-cxx; \
   ./waf configure; \
   ./waf; \
   ./waf install; \
   ./waf docs; \
   echo "/usr/local/lib64" > /etc/ld.so.conf.d/ndn-cxx.conf; \
   ldconfig; \
-  cd /ndn; \
+  cd /root; \
   git clone https://github.com/named-data/ndn-tools.git; \
-  cd /ndn/ndn-tools; \
+  cd /root/ndn-tools; \
   ./waf configure; \
   ./waf; \
   ./waf install; \
   ldconfig; \
-  cd /ndn; \
+  cd /root; \
   git clone --recursive https://github.com/named-data/NFD; \
-  cd /ndn/NFD; \
+  cd /root/NFD; \
   ./waf configure; \
   ./waf; \
   ./waf install; \
   ./waf docs; \
-  ldconfig;
+  ldconfig; \
+  cd /root; \
+  git clone https://github.com/named-data/ndn-traffic-generator.git; \
+  cd /root/ndn-traffic-generator; \
+  ./waf configure; \
+  ./waf; \
+  ./waf install; \
+  ldconfig
+
+# For interactive troubleshooting
+RUN dnf -y install iproute man vim; \
+  mandb
 
 WORKDIR /root
 
@@ -54,6 +59,6 @@ WORKDIR /root
 # you should do a second FROM, something like:
 
 # FROM alpine # or any other base
-# COPY --from=firstfrom /ndn /ndn
+# COPY --from=firstfrom /root/ndn /root/ndn
 
 # as shown in https://github.com/svlentink/www/blob/master/Dockerfile
