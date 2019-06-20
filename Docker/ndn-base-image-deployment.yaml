@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.17.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ndn-base-image
+  name: ndn-base-image
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ndn-base-image
+    spec:
+      containers:
+      - image: ndn-base-image
+        name: ndnbase
+        resources: {}
+      restartPolicy: Always
+status: {}

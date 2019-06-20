@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.17.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ndn-producer
+  name: ndn-producer
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ndn-producer
+    spec:
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-router1
+        - name: monitoring_port
+          value: "8081"
+        image: ndn-producer
+        name: ndn-producer1
+        ports:
+        - containerPort: 8080
+        resources: {}
+      hostname: ndn-producer1
+      restartPolicy: Always
+status: {}
