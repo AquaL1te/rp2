@@ -9,28 +9,30 @@ services:
     container_name: ndn-router1
     hostname: ndn-router1
     ports:
-      - 6363:6363
       - 8080:8080
+    environment:
+      - monitoring_port=8080
   ndn-producer:
     build: ./producer
     container_name: ndn-producer1
     hostname: ndn-producer1
     ports:
-      - 6363:6363
       - 8081:8080
     depends_on:
       - ndn-router
     environment:
       - gateway=ndn-router1
+      - monitoring_port=8081
   ndn-consumer:
     build: ./consumer
     container_name: ndn-consumer1
     hostname: ndn-consumer1
     ports:
-      - 6363:6363
-      - 8081:8080
+      - 8082:8080
     depends_on:
       - ndn-router
       - ndn-producer
     environment:
       - gateway=ndn-router1
+      - monitoring_port=8082
+      - routes=/example /os3 /uva
