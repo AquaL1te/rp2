@@ -12,6 +12,8 @@ services:
       - 8080:8080
     environment:
       - monitoring_port=8080
+    depends_on:
+      - ndn-base-image
   ndn-producer:
     build: ./producer
     container_name: ndn-producer1

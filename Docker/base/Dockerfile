@@ -1,4 +1,4 @@
-FROM fedora:30 AS firstfrom
+FROM fedora:30 AS ndnbase
 
 MAINTAINER Kees de Jong "keesdejong@fedoraproject.org"
 
@@ -53,12 +53,3 @@ RUN dnf -y install iproute man vim; \
   mandb
 
 WORKDIR /root
-
-# doing RUN dnf -y remove,
-# actually makes the image larger, since you add an extra layer
-# you should do a second FROM, something like:
-
-# FROM alpine # or any other base
-# COPY --from=firstfrom /root/ndn /root/ndn
-
-# as shown in https://github.com/svlentink/www/blob/master/Dockerfile
