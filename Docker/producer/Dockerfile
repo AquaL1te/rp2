@@ -7,7 +7,8 @@ RUN git clone https://github.com/named-data/repo-ng.git; \
   ./waf; \
   ./waf install; \
   ldconfig; \
-  mkdir -vp /var/lib/ndn/repo-ng
+  mkdir -vp /var/lib/ndn/repo-ng; \
+  mandb
 
 # NDN customization
 # TODO: Run NDN as non-root, binaries need special capabilities e.g. CAP_NET_ADMIN
