@@ -11,7 +11,9 @@ services:
     ports:
       - 8080:8080
     environment:
+      - gateway=ndn-producer
       - monitoring_port=8080
+      - routes=/ndn/ark /ndn/doi /ndn/handle /ndn/urn
     depends_on:
       - ndn-base-image
   ndn-producer:
@@ -25,6 +27,7 @@ services:
     environment:
       - gateway=ndn-router1
       - monitoring_port=8081
+      - routes=ndn-router1
   ndn-consumer:
     build: ./consumer
     container_name: ndn-consumer1
@@ -37,4 +40,4 @@ services:
     environment:
       - gateway=ndn-router1
       - monitoring_port=8082
-      - routes=/example /os3 /uva
+      - routes=ndn-router1
