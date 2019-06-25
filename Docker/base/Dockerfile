@@ -1,4 +1,4 @@
-FROM fedora:30 AS ndnbase
+FROM fedora:30 AS ndn-base-image
 
 MAINTAINER Kees de Jong "keesdejong@fedoraproject.org"
 
@@ -19,7 +19,7 @@ RUN dnf -y update --refresh; \
   cd /root; \
   git clone https://github.com/named-data/ndn-cxx; \
   cd /root/ndn-cxx; \
-  ./waf configure; \
+  ./waf configure --with-examples --with-tests; \
   ./waf; \
   ./waf install; \
   ./waf docs; \
