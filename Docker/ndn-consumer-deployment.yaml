@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert
+    kompose.cmd: kompose --file=docker-compose.yml convert
     kompose.version: 1.17.0 (HEAD)
   creationTimestamp: null
   labels:
@@ -24,7 +24,7 @@ spec:
         - name: monitoring_port
           value: "8082"
         - name: routes
-          value: /example /os3 /uva
+          value: ndn-router1
         image: ndn-consumer
         name: ndn-consumer1
         ports:

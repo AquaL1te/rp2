@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert
+    kompose.cmd: kompose --file=docker-compose.yml convert
     kompose.version: 1.17.0 (HEAD)
   creationTimestamp: null
   labels:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - image: ndn-base-image
-        name: ndnbase
+        name: ndn-base-image
         resources: {}
       restartPolicy: Always
 status: {}
