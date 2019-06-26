@@ -3,7 +3,7 @@ version: "3"
 services:
   ndn-base-image:
     build: ./base
-    container_name: docker_ndn-base-image
+    container_name: ndnbase
   ndn-router:
     build: ./router
     container_name: ndn-router1
@@ -27,11 +27,11 @@ services:
     environment:
       - gateway=ndn-router1
       - monitoring_port=8081
-      - routes=ndn-router1
-  ndn-consumer:
-    build: ./consumer
-    container_name: ndn-consumer1
-    hostname: ndn-consumer1
+      - routes=ndn-router1	  
+  ndn-gateway:
+    build: ./gateway
+    container_name: ndn-gateway1
+    hostname: ndn-gateway1
     ports:
       - 8082:8080
     depends_on:
@@ -40,4 +40,18 @@ services:
     environment:
       - gateway=ndn-router1
       - monitoring_port=8082
-      - routes=/ndn/ark /ndn/doi /ndn/handle /ndn/urn ndn-router1 ndn-router1
+      - routes=ndn-router1	  
+  ndn-consumer:
+    build: ./consumer
+    container_name: ndn-consumer1
+    hostname: ndn-consumer1
+    ports:
+      - 8083:8080
+    depends_on:
+      - ndn-router
+      - ndn-producer
+	  - ndn-gateway
+    environment:
+      - gateway=gateway1
+      - monitoring_port=8083
+      - routes=ndn-router1
