@@ -3,7 +3,7 @@ version: "3"
 services:
   ndn-base-image:
     build: ./base
-    container_name: ndn-base-image
+    container_name: docker_ndn-base-image
   ndn-router:
     build: ./router
     container_name: ndn-router1
