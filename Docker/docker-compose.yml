@@ -50,7 +50,7 @@ services:
     depends_on:
       - ndn-router
       - ndn-producer
-	  - ndn-gateway
+      - ndn-gateway
     environment:
       - gateway=gateway1
       - monitoring_port=8083
