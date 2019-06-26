@@ -40,4 +40,4 @@ services:
     environment:
       - gateway=ndn-router1
       - monitoring_port=8082
-      - routes=ndn-router1
+      - routes=/ndn/ark /ndn/doi /ndn/handle /ndn/urn ndn-router1 ndn-router1
