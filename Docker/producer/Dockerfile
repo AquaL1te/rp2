@@ -1,4 +1,5 @@
 FROM docker_ndn-base-image
+#FROM aqual1te/ndn:base1
 
 # Install repo-ng
 RUN git clone https://github.com/named-data/repo-ng.git; \

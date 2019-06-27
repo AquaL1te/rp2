@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-router
+spec:
+  ports:
+  - name: ndn-router
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-router
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-producer
+spec:
+  ports:
+  - name: ndn-producer
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-producer
+  type: NodePort

@@ -1,4 +1,5 @@
 FROM docker_ndn-base-image
+FROM aqual1te/ndn:base1
 
 # NDN customization
 # TODO: Run NDN as non-root, binaries need special capabilities e.g. CAP_NET_ADMIN

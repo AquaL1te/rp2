@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: ndn-consumer
+  name: ndn-consumer
+spec:
+  selector:
+    matchLabels:
+      app: ndn-consumer
+  serviceName: ndn-consumer
+  replicas: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ndn-consumer
+    spec:
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-router
+        - name: monitoring_port
+          value: "8081"
+        - name: routes
+          value: ndn-router
+        image: aqual1te/ndn:consumer1
+        name: ndn-consumer1
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
