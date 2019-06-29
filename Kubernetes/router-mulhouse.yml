@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ndn-router  
+  labels:
+    app: ndn-router
+spec:
+  selector:
+    matchLabels:
+      app: ndn-router
+  serviceName: ndn-router
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ndn-router
+    spec:
+      # initContainers: # it might work
+      # - name: ndn-producer1
+      #   image: busybox
+      #   command: ['sh', '-c', 'until nslookup ndn-producer-0; do echo waiting for ndn-producer-0; sleep 2; done;']
+      nodeName: mulhouse
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-producer
+        - name: monitoring_port
+          value: "8080"
+        - name: routes
+          value: /ndn/ark /ndn/doi /ndn/handle /ndn/urn
+        image: aqual1te/ndn:router1
+        name: ndn-router1
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always

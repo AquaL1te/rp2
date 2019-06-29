@@ -23,3 +23,16 @@ spec:
   selector:
     app: ndn-producer
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-consumer
+spec:
+  ports:
+  - name: ndn-consumer
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-producer
+  type: NodePort

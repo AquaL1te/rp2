@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: ndn-consumer
+  name: ndn-consumer
+spec:
+  selector:
+    matchLabels:
+      app: ndn-consumer
+  serviceName: ndn-consumer
+  replicas: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ndn-consumer
+    spec:
+      nodeName: mulhouse
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-router
+        - name: monitoring_port
+          value: "8081"
+        - name: routes
+          value: ndn-router
+        image: aqual1te/ndn:consumer1
+        name: ndn-consumer-mulhouse
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: ndn-producer
+  name: ndn-producer
+spec:
+  selector:
+    matchLabels:
+      app: ndn-producer
+  serviceName: ndn-producer
+  replicas: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ndn-producer
+    spec:
+      nodeName: mulhouse
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-router
+        - name: monitoring_port
+          value: "8081"
+        - name: routes
+          value: ndn-router
+        image: aqual1te/ndn:producer1
+        name: ndn-producer-mulhouse
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ndn-router  
+  labels:
+    app: ndn-router
+spec:
+  selector:
+    matchLabels:
+      app: ndn-router
+  serviceName: ndn-router
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ndn-router
+    spec:
+      # initContainers: # it might work
+      # - name: ndn-producer-mulhouse
+      #   image: busybox
+      #   command: ['sh', '-c', 'until nslookup ndn-producer-0; do echo waiting for ndn-producer-0; sleep 2; done;']
+      nodeName: mulhouse
+      containers:
+      - env:
+        - name: gateway
+          value: ndn-producer
+        - name: monitoring_port
+          value: "8080"
+        - name: routes
+          value: /ndn/ark /ndn/doi /ndn/handle /ndn/urn
+        image: aqual1te/ndn:router1
+        name: ndn-router-mulhouse
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-router
+spec:
+  ports:
+  - name: ndn-router
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-router
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-producer
+spec:
+  ports:
+  - name: ndn-producer
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-producer
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-consumer
+spec:
+  ports:
+  - name: ndn-consumer
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: ndn-producer
+  type: NodePort
