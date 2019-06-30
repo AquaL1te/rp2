@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: busy-service
+spec:
+  selector:
+    app: busy
+  ports:
+  - name: foo # Actually, no port is needed.
+    port: 1234
+    targetPort: 1234
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-router-mulhouse  # name of the pod
+  labels:
+    name: busy # has label busybox, and thus the ports of that service
+spec:
+  hostname: busy-router-mulhouse # dns name of th epod
+  nodeName: mulhouse
+  containers:
+  - image: busybox:1.28
+    command:
+      - sleep
+      - "3600"
+    name: busybox # name of container
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy-router-nimes # name of pod
+  labels:
+    name: busy # label of the pod
+spec:
+  hostname: busy-router-nimes # dns name
+  nodeName: mulhouse
+  containers:
+  - image: busybox:1.28
+    command:
+      - sleep
+      - "3600"
+    name: busybox # name of container

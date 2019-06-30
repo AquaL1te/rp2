@@ -172,14 +172,39 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ndn-router
+  name: ndn-router-mulhouse
 spec:
   ports:
-  - name: ndn-router
+  - name: monitoring
     port: 8080
     targetPort: 8080
+  - name: ndn1
+    port: 6363
+    targetPort: 6363
+  - name: ndn2
+    port: 9696
+    targetPort: 9696
   selector:
-    app: ndn-router
+    app: ndn-router-mulhouse
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-router-nimes
+spec:
+  ports:
+  - name: monitoring
+    port: 8080
+    targetPort: 8080
+  - name: ndn1
+    port: 6363
+    targetPort: 6363
+  - name: ndn2
+    port: 9696
+    targetPort: 9696
+  selector:
+    app: ndn-router-nimes
   type: NodePort
 ---
 apiVersion: v1
@@ -188,9 +213,15 @@ metadata:
   name: ndn-producer
 spec:
   ports:
-  - name: ndn-producer
+  - name: monitoring
     port: 8080
     targetPort: 8080
+  - name: ndn1
+    port: 6363
+    targetPort: 6363
+  - name: ndn2
+    port: 9696
+    targetPort: 9696
   selector:
     app: ndn-producer
   type: NodePort
@@ -198,12 +229,37 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ndn-consumer
+  name: ndn-consumer-mulhouse
 spec:
   ports:
-  - name: ndn-consumer
+  - name: monitoring
     port: 8080
     targetPort: 8080
+  - name: ndn1
+    port: 6363
+    targetPort: 6363
+  - name: ndn2
+    port: 9696
+    targetPort: 9696
   selector:
-    app: ndn-producer
+    app: ndn-consumer-mulhouse
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ndn-consumer-nimes
+spec:
+  ports:
+  - name: monitoring
+    port: 8080
+    targetPort: 8080
+  - name: ndn1
+    port: 6363
+    targetPort: 6363
+  - name: ndn2
+    port: 9696
+    targetPort: 9696
+  selector:
+    app: ndn-consumer-nimes
   type: NodePort
