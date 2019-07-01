@@ -33,11 +33,11 @@ spec:
       name: ndn-consumer-1
       env:
       - name: gateway
-        value: ndn-router
+        value: ndn-producer-1.ndn.default.svc.cluster.local
       - name: monitoring_port
         value: "8081"
       - name: routes
-        value: ndn-router
+        value: /ndn
       - name: protocol
         value: udp
   restartPolicy: Always
@@ -58,11 +58,11 @@ spec:
       name: ndn-consumer1
       env:
       - name: gateway
-        value: ndn-router
+        value: ndn-producer-1.ndn.default.svc.cluster.local
       - name: monitoring_port
         value: "8081"
       - name: routes
-        value: ndn-router
+        value: /ndn 
       - name: protocol
         value: udp
   restartPolicy: Always

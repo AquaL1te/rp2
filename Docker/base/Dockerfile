@@ -48,8 +48,17 @@ RUN dnf -y update --refresh; \
   ./waf install; \
   ldconfig
 
+# Copy consumer and producer scripts
+COPY pid_client.py /root/pid_client.py
+COPY ndn_client.py /root/ndn_client.py
+COPY pid_server.py /root/pid_server.py
+COPY ndn_server.py /root/ndn_server.py
+
 # For interactive troubleshooting
 RUN dnf -y install iproute man vim; \
   mandb
+
+# Needed for python
+RUN dnf -y install python3-urllib3
 
 WORKDIR /root
