@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Hostname: $HOSTNAME"
+echo "Gateway: $gateway"
 
 if nfd-start > /var/log/nfd.log; then
   echo "NFD started"
@@ -17,15 +18,19 @@ else
   echo "repo-ng failed to start"
 fi
 
-if nfdc face create udp4://"$gateway":6363; then
-  echo "Default NDN gateway interface set"
-else
-  echo "Failed to set default NDN gateway interface"
-  exit
+if [[ -n "$routes" ]];
+  for route in $routes; do
+    if nfdc route add "$route" "$protocol"://"$gateway":6363; then
+      echo "NDN route $route added"
+    else
+      echo "Failed to set $route route"
+      exit
+    fi
+  done
 fi
 
 for route in $routes; do
-  if nfdc route add "$route" udp://"$gateway":6363; then
+  if nfdc route add "$route" "$protocol"://"$gateway":6363; then
     echo "NDN route $route added"
   else
     echo "Failed to set $route route"
