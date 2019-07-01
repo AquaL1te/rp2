@@ -29,7 +29,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer1
+    - image: aqual1te/ndn:consumer3
       name: ndn-consumer-1
       env:
       - name: gateway
@@ -38,6 +38,8 @@ spec:
         value: "8081"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -52,7 +54,7 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer1
+    - image: aqual1te/ndn:consumer3
       name: ndn-consumer1
       env:
       - name: gateway
@@ -61,6 +63,8 @@ spec:
         value: "8081"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -75,7 +79,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:producer1
+    - image: aqual1te/ndn:producer3
       name: ndn-producer1
       env:
       - name: gateway
@@ -84,6 +88,8 @@ spec:
         value: "8081"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -98,7 +104,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router1
+    - image: aqual1te/ndn:router3
       name: ndn-router1
       env:
       - name: gateway
@@ -107,6 +113,8 @@ spec:
         value: "8081"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -121,7 +129,7 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router1
+    - image: aqual1te/ndn:router3
       name: ndn-router1
       env:
       - name: gateway
@@ -130,4 +138,6 @@ spec:
         value: "8081"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always

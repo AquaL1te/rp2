@@ -18,7 +18,7 @@ else
   exit
 fi
 
-if [[ -n "$routes" ]];
+if [[ -n "$routes" ]]; then
   for route in $routes; do
     if nfdc route add "$route" "$protocol"://"$gateway":6363; then
       echo "NDN route $route added"
