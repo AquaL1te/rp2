@@ -29,38 +29,17 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer1
+    - image: aqual1te/ndn:consumer4
       name: ndn-consumer-1
       env:
       - name: gateway
-        value: ndn-router
+        value: ndn-producer-1.ndn.default.svc.cluster.local
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
-        value: ndn-router
-  restartPolicy: Always
----
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    name: ndn
-    role: consumer
-  name: ndn-consumer-2
-spec:
-  hostname: ndn-consumer-2
-  nodeName: nimes
-  subdomain: ndn
-  containers:
-    - image: aqual1te/ndn:consumer1
-      name: ndn-consumer1
-      env:
-      - name: gateway
-        value: ndn-router
-      - name: monitoring_port
-        value: "8081"
-      - name: routes
-        value: ndn-router
+        value: /ndn
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -75,15 +54,17 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:producer1
+    - image: aqual1te/ndn:producer4
       name: ndn-producer1
       env:
       - name: gateway
         value: ndn-router
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -98,36 +79,16 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router1
+    - image: aqual1te/ndn:router4
       name: ndn-router1
       env:
       - name: gateway
         value: ndn-router
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: ndn-router
+      - name: protocol
+        value: udp
   restartPolicy: Always
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    name: ndn
-    role: router
-  name: ndn-router-2
-spec:
-  hostname: ndn-router-2
-  nodeName: nimes
-  subdomain: ndn
-  containers:
-    - image: aqual1te/ndn:router1
-      name: ndn-router1
-      env:
-      - name: gateway
-        value: ndn-router
-      - name: monitoring_port
-        value: "8081"
-      - name: routes
-        value: ndn-router
-  restartPolicy: Always

@@ -29,13 +29,13 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer3
+    - image: aqual1te/ndn:consumer4
       name: ndn-consumer-1
       env:
       - name: gateway
         value: ndn-producer-1.ndn.default.svc.cluster.local
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: /ndn
       - name: protocol
@@ -54,13 +54,13 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer3
+    - image: aqual1te/ndn:consumer4
       name: ndn-consumer1
       env:
       - name: gateway
         value: ndn-producer-1.ndn.default.svc.cluster.local
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: /ndn 
       - name: protocol
@@ -79,13 +79,13 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:producer3
+    - image: aqual1te/ndn:producer4
       name: ndn-producer1
       env:
       - name: gateway
         value: ndn-router
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: ndn-router
       - name: protocol
@@ -104,13 +104,13 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router3
+    - image: aqual1te/ndn:router4
       name: ndn-router1
       env:
       - name: gateway
         value: ndn-router
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: ndn-router
       - name: protocol
@@ -129,13 +129,13 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router3
+    - image: aqual1te/ndn:router4
       name: ndn-router1
       env:
       - name: gateway
         value: ndn-router
       - name: monitoring_port
-        value: "8081"
+        value: "8080"
       - name: routes
         value: ndn-router
       - name: protocol
