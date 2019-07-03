@@ -38,10 +38,13 @@ for route in $routes; do
   fi
 done
 
+python3 /root/pid_server.py > /var/log/pid_server.log
+python3 /root/ndn_server.py > /var/log/ndn_server.log
+
 if [[ -f /var/log/nfd.log ]]; then
   echo "Starting /var/log/nfd.log tail + HTTP monitoring page (port $monitoring_port)"
   nfd-status-http-server -a 0.0.0.0 -p "$monitoring_port" &
-  tail -f /var/log/nfd.log /var/log/repo-ng.log
+  tail -f /var/log/nfd.log /var/log/repo-ng.log /var/log/pid_server.log /var/log/ndn_server.log
 else
   echo "No NFD log found"
   exit

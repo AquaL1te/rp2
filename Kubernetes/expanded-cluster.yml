@@ -39,7 +39,7 @@ spec:
       - name: routes
         value: /ndn
       - name: protocol
-        value: udp
+        value: tcp
   restartPolicy: Always
 ---
 apiVersion: v1
@@ -64,7 +64,7 @@ spec:
       - name: routes
         value: /ndn 
       - name: protocol
-        value: udp
+        value: tcp
   restartPolicy: Always
 ---
 apiVersion: v1

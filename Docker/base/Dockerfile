@@ -58,7 +58,7 @@ COPY ndn_server.py /root/ndn_server.py
 RUN dnf -y install iproute man vim; \
   mandb
 
-# Needed for python
+# Needed for Python scripts
 RUN dnf -y install python3-urllib3
 
 WORKDIR /root
