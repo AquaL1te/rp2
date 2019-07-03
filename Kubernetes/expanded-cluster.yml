@@ -29,7 +29,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer4
+    - image: aqual1te/ndn:consumer6
       name: ndn-consumer-1
       env:
       - name: gateway
@@ -54,7 +54,7 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:consumer4
+    - image: aqual1te/ndn:consumer6
       name: ndn-consumer1
       env:
       - name: gateway
@@ -79,7 +79,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:producer5
+    - image: aqual1te/ndn:producer9
       name: ndn-producer1
       env:
       - name: gateway
@@ -104,7 +104,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router4
+    - image: aqual1te/ndn:router6
       name: ndn-router1
       env:
       - name: gateway
@@ -129,7 +129,7 @@ spec:
   nodeName: nimes
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:router4
+    - image: aqual1te/ndn:router6
       name: ndn-router1
       env:
       - name: gateway

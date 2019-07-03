@@ -54,7 +54,7 @@ spec:
   nodeName: mulhouse
   subdomain: ndn
   containers:
-    - image: aqual1te/ndn:producer5
+    - image: aqual1te/ndn:producer9
       name: ndn-producer1
       env:
       - name: gateway
