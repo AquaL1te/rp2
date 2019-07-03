@@ -38,8 +38,17 @@ for route in $routes; do
   fi
 done
 
-python3 /root/pid_server.py > /var/log/pid_server.log
-python3 /root/ndn_server.py > /var/log/ndn_server.log
+if python3 /root/pid_server.py > /var/log/pid_server.log; then
+  echo "PID server started"
+else
+  echo "PID server failed to start"
+fi
+
+if python3 /root/ndn_server.py > /var/log/ndn_server.log; then
+  echo "NDN server started"
+else
+  echo "NDN server failed to start"
+fi
 
 if [[ -f /var/log/nfd.log ]]; then
   echo "Starting /var/log/nfd.log tail + HTTP monitoring page (port $monitoring_port)"
