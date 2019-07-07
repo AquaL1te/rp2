@@ -1,0 +1,36 @@
+Zaterdag 6 juli
+Section Introduction afmaken
+Kees: what is ndn, related work (ndn deel), en research question
+Anas: background, what is a pid, related work (pid deel), scope, report structure (kan pas wanneer report af is)
+
+
+Zondag 7 juli
+Section Technical overview afmaken
+Ieder zijn onderwerp
+
+
+Maandag 8 juli
+Methodology
+En ieder zijn eigen section beschrijven
+
+
+Woensdag
+10 juli
+Discussion, Conclusion en Future work
+
+---
+
+Writing style
+Put source inline, e.g. “we watched the news [cnn.com, nu.nl, Title of research + author] and learned more about the world.” That way we can insert it into BibTex later without looking up the details such as which source was used and where to reference it in the text. Or use the builtin function to add sources in GDocs. See footnote for link.
+
+Refer people with their surname, e.g. Mousa, not just Rahaf. If more than two people; Mousa et al.
+Construct the text in the past tense, e.g. “we researched the following method”.
+
+Don’t overcomplicate the sentence (no more than two commas in a sentence and explain things in an easy understandable way).
+Use precise definition, e.g. “the method was faster and easier to deploy” doesn’t tell the reader anything, define easy and what makes it faster?
+
+Refer to we, not I.
+
+Keep diagrams as separate files in the GDrive and insert them in the GDoc as well. That way we keep the originals (for easy upload to LaTeX) and also keep the overview of diagrams and their sizes in the doc.
+
+Do not use abbreviations (e.g. “does not” instead of “doesn’t”)
