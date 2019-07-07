@@ -1,7 +1,23 @@
-\section{Technical overview}
-Short intro about this section
+\section{Technical overview}\label{tech-oview}
+Short intro about this section - its about giving the reader a detailed overview of the technology used, to showcase that we know what we talk about and to demonstrate that these technologies fit into answering the research question.
 
-\subsection{PID types}
+\subsection{PID types and naming scheme}\label{pid-types}
+Over the years, different kinds of PIDs have emerged. The most widely used PID types are Handle (first major PID type introduced 
+in 1994), Digital Object Identifier (DOI), Persistent URL (PURL), Uniform Resource Name (URN) and 
+Archival Resource Key (ARK) \cite{pid-oview, odin, hdl}.
+
+Every PID type makes use of the same hierarchical naming scheme, which starts with a PID type identifier,
+ such as \texttt{"urn"}, \texttt{"handle"} or \texttt{"doi"}, followed by some kind of delimiter. The PID type identifier is usually embedded in the URL of the PID resolver naming authority 
+such as \texttt{http://hdl.handle.net/} for resolving Handle PIDs, \texttt{https://doi.pangaea.de/} for resolving DOI PIDs or \texttt{http://resolver.kb.nl/resolve?urn=} for resolving URN PIDs, followed by the PID of the digital object. This means that PIDs are usually associated with a resolver via a URL \cite{ids, icn-bd}.
+
+After this the naming authority is defined (which can be seen as a prefix of a digital object), followed again 
+by some kind of delimiter. At last there is a Namespace Specific String which is the identity of a digital object within the naming authority, which syntax depends on the naming
+authority.
+%A more in-depth description of PIDs can be found in \cite{icn-bd} and \cite{pid-oview}.
+For a more in-depth description of PIDs we refer to \cite{icn-bd} and \cite{pid-oview}.
+
+Talk about how DOI is interoperable within Handle?
+
 \subsubsection{ARK}
 Bla bla
 
@@ -9,17 +25,24 @@ Bla bla
 Bla bla
 
 \subsection{NDN}
+\label{overview-ndn}
 \subsubsection{Caching}
-Bla bla
+Bla bla, strategies (also cache replacement strategies), which one is best?
 
 \subsubsection{Forwarding}
-Bla bla
+Bla bla - Strategies, OSFPN/NLSR, which one is best?
 
-\subsection{SDN}
-What is it? Which benefits does it bring? Research done for NDN?
+\subsection{McCabe}
+\label{overview-mccabe}
+Describe his method in more detail, explain adaptions towards ndn, if applicable.
 
 \subsection{TOSCA}
 Why use it, why did we use it? Are there alternatives? Compare them shortly - if needed
+Highlight popularity, Google, RedHat, Canonical, etc. - to emphasize that TOSCA won't go away soon, but keeps growing
+Merge McCabe's method and tosca as one
+
+\subsubsection{Orchestrators}
+Describe DRIP, OpenStack and an orchestrator in general
 
 \subsection{Virtualization}
 \subsubsection{Docker}
