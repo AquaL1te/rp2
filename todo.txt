@@ -34,3 +34,9 @@ Refer to we, not I.
 Keep diagrams as separate files in the GDrive and insert them in the GDoc as well. That way we keep the originals (for easy upload to LaTeX) and also keep the overview of diagrams and their sizes in the doc.
 
 Do not use abbreviations (e.g. “does not” instead of “doesn’t”)
+
+Check if there is a reference to the used figures. All figures used in this document must be referenced.
+
+Tables: Table title above the table
+Figures: Figure title below the figure
+

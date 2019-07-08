@@ -8,7 +8,7 @@ Archival Resource Key (ARK) \cite{pid-oview, odin, hdl}.
 
 Every PID type makes use of the same hierarchical naming scheme, which starts with a PID type identifier,
  such as \texttt{"urn"}, \texttt{"handle"} or \texttt{"doi"}, followed by some kind of delimiter. The PID type identifier is usually embedded in the URL of the PID resolver naming authority 
-such as \texttt{http://hdl.handle.net/} for resolving Handle PIDs, \texttt{https://doi.pangaea.de/} for resolving DOI PIDs or \texttt{http://resolver.kb.nl/resolve?urn=} for resolving URN PIDs, followed by the PID of the digital object. This means that PIDs are usually associated with a resolver via a URL \cite{ids, icn-bd}.
+such as \texttt{"http://hdl.handle.net/"} for resolving Handle PIDs, \texttt{"https://doi.pangaea.de/"} for resolving DOI PIDs or \texttt{"http://resolver.kb.nl/resolve?urn="} for resolving URN PIDs, followed by the PID of the digital object. This means that PIDs are usually associated with a resolver via a URL \cite{ids, icn-bd}.
 
 After this the naming authority is defined (which can be seen as a prefix of a digital object), followed again 
 by some kind of delimiter. At last there is a Namespace Specific String which is the identity of a digital object within the naming authority, which syntax depends on the naming
@@ -16,7 +16,25 @@ authority.
 %A more in-depth description of PIDs can be found in \cite{icn-bd} and \cite{pid-oview}.
 For a more in-depth description of PIDs we refer to \cite{icn-bd} and \cite{pid-oview}.
 
-Talk about how DOI is interoperable within Handle?
+\begin {table}[H]
+\caption {Hierarchical scheme of PID standards \cite{icn-bd}.} \label{tab:pid} 
+\begin{center}
+\scalebox{0.82}{%
+  \begin{tabular}{| c | c | c | c | c | c | }
+    \hline
+    \textbf{PID types} & \textbf{PID Type Identifier} & \textbf{Delimiter} & \textbf{Authority} & \textbf{Delimiter} & \textbf{Name} \\ \hline
+    \textbf{URN} & urn & : & \textless NID\textgreater & : & \textless NSS\textgreater \\ \hline
+    \textbf{Handle} & handle & : & \textless Handle Naming Authority\textgreater & / & \textless Handle Local Name\textgreater \\ \hline
+    \textbf{DOI} & doi & : & 10.\textless Naming Authority\textgreater & / & \textless doi name syntax\textgreater \\ \hline
+    \textbf{ARK} & ark & : & /\textless NAAN\textgreater & / & \textless Name\textgreater [\textless Qualifier\textgreater] \\ \hline
+    \textbf{PURL} & purl & : & \textless protocol\textgreater \textless resolver address\textgreater & / & \textless name\textgreater \\
+    \hline
+  \end{tabular}}
+\end{center}
+\end {table}
+
+
+Talk about how DOI is interoperable within Handle? > Yes
 
 \subsubsection{ARK}
 Bla bla
@@ -24,29 +42,47 @@ Bla bla
 \subsubsection{DOI}
 Bla bla
 
+
+
+%%% KAAS
+
+
 \subsection{NDN}
 \label{overview-ndn}
+% Brief overview of technical components, such as; PIT, CS, FIB, strategies (cache, replacement, forwarding)
+In NDN the content can be retrieved from any source that has the named data. These can be from the original publisher, a repository, a router cache or a neighbor. NDN can be used as an overlay on any type of network e.g. TCP/IP, but also Bluetooth. All content can be authenticated by the use of integrity checks to ensure untained copies of the data. Efficient distribution is achieved by caching at intermediary hops in the NDN network. These hops can be NDN routers, but also cellphones and laptops. This distributed nature of NDN provides parallel transfers such as bulk data distribution and thus collaboration simultaneously on the same datasets, such as climate change data.
+
+In NDN, the receiving end is in control of communication. Two distinct packets are used to drive communication; interest and data packets. In order to query for data names in the NDN network, the interest packet is used. When this interest packet is received by a node in the NDN network that has the data, a data packet is returned. This data packets is send back over the same route as the interest packet was sent, resulting in symmetric forwarding. As discussed earlier, data may be cached on the intermediary hops in the NDN network.
+
+
+
 \subsubsection{Caching}
-Bla bla, strategies (also cache replacement strategies), which one is best?
+% explain what caching is (including strategies)
+
 
 \subsubsection{Forwarding}
-Bla bla - Strategies, OSFPN/NLSR, which one is best?
+% Strategies, OSFPN/NLSR, which one is best? also include strategies
+
 
 \subsection{McCabe}
 \label{overview-mccabe}
-Describe his method in more detail, explain adaptions towards ndn, if applicable.
+% Describe his method in more detail, explain adaptions towards ndn, if applicable.
+% Add diagram to description, to illustrate the flow of the train of thought
+% discuss RMA from book
+
+% An NDN network uses routers, bandwidth and other resources to provide its users with a service. Therefore, the methodology described in McCabe can be used to plan an NDN network as well. However, traditional network designs focus on capacity planning, which is over-engineering the amount of network capacity needed. In NDN, with in-network caching, network traffic is distributed by design. Therefore, McCabe's systems methodology will be used, but slightly adapted to NDN. 
 
 \subsection{TOSCA}
-Why use it, why did we use it? Are there alternatives? Compare them shortly - if needed
-Highlight popularity, Google, RedHat, Canonical, etc. - to emphasize that TOSCA won't go away soon, but keeps growing
-Merge McCabe's method and tosca as one
+% Why use it, why did we use it? Are there alternatives? Compare them shortly - if needed
+% Highlight popularity, Google, RedHat, Canonical, etc. - to emphasize that TOSCA won't go away soon, but keeps growing
+% Merge McCabe's method and tosca as one method
 
 \subsubsection{Orchestrators}
-Describe DRIP, OpenStack and an orchestrator in general
+%Describe DRIP, OpenStack and an orchestrator in general
 
 \subsection{Virtualization}
 \subsubsection{Docker}
-What is it, why use it, why do we use it and how?
+%What is it, why use it, why do we use it and how?
 
 \subsubsection{Kubernetes}
-What is it, why use it, why do we use it and how?
+%What is it, why use it, why do we use it and how?

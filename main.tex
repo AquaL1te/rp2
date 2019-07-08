@@ -10,6 +10,8 @@
 \usepackage{booktabs}
 \usepackage{csquotes}
 \usepackage[style=numeric,backend=biber]{biblatex}
+\usepackage[acronym]{glossaries}
+%,nomain,nonumberlist
 \addbibresource{references.bib}
 
 % \setcounter{section}{-1}
@@ -21,6 +23,8 @@
     breaklines=true,
     postbreak=\mbox{\textcolor{Rhodamine}{$\hookrightarrow$}\space}
 }
+
+\makeglossaries
 
 \begin{document}
 \begin{titlepage}
@@ -49,11 +53,12 @@ by\\[0.2cm]
 \tableofcontents
 \clearpage
 
+\include{Sections/acronyms}
 \include{Sections/abstract}
 \include{Sections/introduction}
 \include{Sections/overview}
 \include{Sections/method}
-\include{Sections/results}
+%\include{Sections/results} % if needed, results can be discussed in method at the end of that section
 \include{Sections/discussion}
 \include{Sections/conclusion}
 \include{Sections/future_work}
