@@ -2,10 +2,10 @@
 %Short intro about it
 %-Show our model
 
-In this section, we propose a model shown in figure \ref{fig:sdc_model} to be demonstrated in our POC. The proposed model achieves PID interoperability within the NDN namespace and makes adding future PID types to be achieved easily.
+In this section, we propose a model shown in figure \ref{fig:sdc_model} to be demonstrated in our PoC. The proposed model achieves PID interoperability within the NDN namespace and makes adding future PID types to be achieved easily.
 \newline
 \newline
-Our model adheres to the following principles.
+Our model adheres to the following principles, which will be discussed in detail.
 
 \begin{itemize}
     \item{Translation is transparent to the user}
@@ -20,7 +20,25 @@ Our model adheres to the following principles.
 \label{fig:sdc_model}
 \end{figure}
 
-\subsection{Interoperability}
+The model that we specified for our PoC consists of the following components, each with their own functionality: the PID server, PID2NDN gateway and client. These components are all part of the NDN network. The general idea is that a user enters a PID of the object that the user want to retrieve at the client and gets back the requested object. The retrieval of the objects depends if the object is already in the NDN network or not.  
+
+\subsection{PID server}
+The PID server is maintained by the PID provider, which identifies objects of a particular PID type. The PID types we cover in our PoC are highlighted in section \ref{pid-types}. For our PoC we have set up our own Handle PID server with Cordra software. We got allotted the Handle prefix \texttt{20.5000.481} by the Handle registry to be used for object identification. Next to this, we also used the resolver of the Dutch Royal Library URNs as well as PANGAEA which resolves DOIs for our PoC.
+
+\subsection{Client}
+The role of the client is to make the user either retrieve the requested object from the corresponding PID provider where the object resides or from the NDN network. 
+The client receives a PID from the user input, which can be any kind of PID type. The client then opens a socket and sends the user request to the gateway. After the gateway does the translation, it sends back to the client either a translated NDN name from the PID if the object is available in the NDN network or a link to the PID server if it is not in the NDN network. If a NDN name is sent back to the client, the client then request the obejct from the NDN network. If not, it sends a request to the PID server for object retrieval.
+
+%.....The user types in PID and gets redirected automatically to either the PID server or NDN network......
+
+\subsection{Gateway}
+we also implemented the resolver of the Dutch Royal Library in our gateway for resolving URNs as well as PANGAEA which resolves DOIs. 
+
+Unlike Mousa's solution, where the PID to NDN translation resides at client side, in our model the gateway does the translation. Which means that the PID schemes used within our case
+the scheme of the pid type
+ndnputchnks
+scheme of PID type has to be taken into account. USe pattern matching
+%\subsection{Interoperability}
 %Way of doing it described in detail, describe the 'how' answer
 
 %Our solution tackles the issue of Mousa and Karakannas where the client has to be updated.
@@ -32,7 +50,7 @@ PID consortium for pattern matching. PID consortium defines standards.
 Pattern matching is used for matching the PID types. And they are here: ptr consortium.
 ePIC Data Type Registry (testing)
 
-Client types in PID and gets redirected automatically to either the PID server or NDN network.
+The user types in PID and gets redirected automatically to either the PID server or NDN network.
 
 We don not match “handle” or “handle:”, “doi” or “doi:“, “urn” or “urn:”. As that really depends on everey PID provider (KB does not do this, urn is mentioned in the URL but this can already be matched according to pid-consortium!) 
 
@@ -47,4 +65,8 @@ Our proposed gateway is similar to The Names to Things resolver (N2T), which can
 
 Metadata, rules, web resolver link or not etc. all depending on PID provider and cloud itself.
 
-Mention using ndnputchunks and ndncatchunks of ndn-tools for POC. Data is cached in memory and takes 3x the size for encoding (I have a source for this). Caching on intermediate routers seems only to take 1x the size as seen yesterday in my mini experiment. For a persistent file cache, compile file-server with NFD, used nfds or ...
+Mention using ndnputchunks and ndncatchunks of ndn-tools for PoC. Data is cached in memory and takes 3x the size for encoding (I have a source for this). Caching on intermediate routers seems only to take 1x the size as seen yesterday in my mini experiment. For a persistent file cache, compile file-server with NFD, used nfds or ...
+
+By taking into account the PID type rules...
+
+Karakannas states that clients code has to be updated everytime.

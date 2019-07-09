@@ -1,10 +1,10 @@
-\section{Technical overview}\label{tech-oview}
+\section{Technical background}\label{tech-oview}
 Short intro about this section - its about giving the reader a detailed overview of the technology used, to showcase that we know what we talk about and to demonstrate that these technologies fit into answering the research question.
 
 \subsection{PID types and naming scheme}\label{pid-types}
 Over the years, different kinds of PIDs have emerged. The most widely used PID types are Handle (first major PID type introduced 
 in 1994), Digital Object Identifier (DOI), Persistent URL (PURL), Uniform Resource Name (URN) and 
-Archival Resource Key (ARK) \cite{pid-oview, odin, hdl} which will be discussed in this section.
+Archival Resource Key (ARK) \cite{pid-oview, odin, hdl}. Our methodology limits itself to the usage of Handle, DOI and URN. We refer to Karakannas \cite{icn-bd} for the technical overview of the other mentioned PID types. 
 
 Every PID type makes use of the same hierarchical naming scheme, which starts with a PID type identifier,
  such as \texttt{"urn"}, \texttt{"handle"} or \texttt{"doi"}, followed by some kind of delimiter. The PID type identifier is usually embedded in the URL of the PID resolver naming authority 
@@ -24,10 +24,9 @@ authority.
     \hline
     \textbf{PID types} & \textbf{PID Type Identifier} & \textbf{Delimiter} & \textbf{Authority} & \textbf{Delimiter} & \textbf{Name} \\ \hline
     \textbf{URN} & urn & : & \textless NID\textgreater & : & \textless NSS\textgreater \\ \hline
-    \textbf{Handle} & handle & : & \textless Handle Naming Authority\textgreater & / & \textless Handle Local Name\textgreater \\ \hline
+    \textbf{Handle} & hdl & : & \textless Handle Naming Authority\textgreater & / & \textless Handle Local Name\textgreater \\ \hline
     \textbf{DOI} & doi & : & 10.\textless Naming Authority\textgreater & / & \textless doi name syntax\textgreater \\ \hline
-    \textbf{ARK} & ark & : & /\textless NAAN\textgreater & / & \textless Name\textgreater [\textless Qualifier\textgreater] \\ \hline
-    \textbf{PURL} & purl & : & \textless protocol\textgreater \textless resolver address\textgreater & / & \textless name\textgreater \\
+
     \hline
   \end{tabular}}
 \end{center}
@@ -73,31 +72,29 @@ The \texttt{<doi name syntax>} part identifies an object within the DOI naming a
 The DOI Resolver is the apex in the hierarchy and it can resolve any RAs' DOI to a URL from which the digital object can be retrieved. 
 %This also achieves resolving DOIs to the digital object by a web accessed resolver.
 This makes the resolution of a DOI to the digital object also achievable by a web accessed resolver \cite{icn-bd}. The PANGAEA information system aimed at archiving, publishing and distributing georeferenced data from earth system research uses DOI \cite{pang}. A DOI URL used by PANGAEA is for example \texttt{https://doi.org/10.1594/PANGAEA.339110}.
-Furthermore, in the DOI system metadata is available in many formats, including Bibtex, Citeproc-JSON, RDF as well as XML and JSON \cite{doi-met}.
+Furthermore, in the DOI system metadata is available in many formats, including Bibtex, Citeproc-JSON, RDF as well as XML and JSON \cite{doi-met}. It depends on the PID provider which format to choose.
 
-\subsubsection{ARK}
-ARK is also one of the most widely used PID types used for persistent identification of digital objects. The ARK system was created in 2001 by the US National Library of Medicine and is currently maintained by the California Digital Library (CDL) \cite{ark-typ}. Its syntax is shown in table \ref{tab:pid}. The Name Assigning Authority Number\texttt{<NAAN>} part identifies the Naming Assigning Authority (NAA) that assigned the specific ARK. The NAAN is a string and consists of five to nine decimals that uniquely identify each NAAN.
+%\subsubsection{ARK}
+%ARK is also one of the most widely used PID types used for persistent identification of digital objects. The ARK system was created in 2001 by the US National Library of Medicine and is currently maintained by the California Digital Library (CDL) \cite{ark-typ}. Its syntax is shown in table \ref{tab:pid}. The Name Assigning Authority Number\texttt{<NAAN>} part identifies the Naming Assigning Authority (NAA) that assigned the specific ARK. The NAAN is a string and consists of five to nine decimals that uniquely identify each NAAN.
 
-The \texttt{<Name>} part in the ARK syntax identifies the digital object, which is unique among the NAAN scope. The \texttt{<Name>} part consists of a string, which is composed of printable ASCII characters and should be less than 128 bytes in length.
+%The \texttt{<Name>} part in the ARK syntax identifies the digital object, which is unique among the NAAN scope. The \texttt{<Name>} part consists of a string, which is composed of printable ASCII characters and should be less than 128 bytes in length.
 
-The \texttt{[<Qualifier>]} part is an optional parameter of the ARK syntax and specifies a variant of a digital object. It can be added by appending a dot(".") character after the \texttt{<Name>} part. 
+%The \texttt{[<Qualifier>]} part is an optional parameter of the ARK syntax and specifies a variant of a digital object. It can be added by appending a dot(".") character after the \texttt{<Name>} part. 
 
-Resolving ARKs is like the aforementioned PID types also achieved by a web accessed resolver called the Naming Mapping Authority (NMAH). 
-Each NAA utilizes its own NMAH that resolves the ARK to a URL, which is used for retrieving the digital object \cite{icn-bd}.
+%Resolving ARKs is like the aforementioned PID types also achieved by a web accessed resolver called the Naming Mapping Authority (NMAH). 
+%Each NAA utilizes its own NMAH that resolves the ARK to a URL, which is used for retrieving the digital object \cite{icn-bd}.
 
-The Name-to-Thing resolver (N2T) is an example of a ARK web resolver. It was originally designed for global resolution of ARK identifiers only, but is nowadays general enough to apply to identifiers schemes from any PID type. An example of a ARK URL, which is resolved by the N2T resolver is \texttt{https://n2t.net/ark:/12345/fk1234} \cite{n2t}. To access metadata, a question mark ("?") has to be appended at the end of the URL where the API then returns metadata in the Electronic Resource Citation (ERC) format \cite{ark-erc}. 
+%The Name-to-Thing resolver (N2T) is an example of a ARK web resolver. It was originally designed for global resolution of ARK identifiers only, but is nowadays general enough to apply to identifier schemes from any PID type. An example of a ARK URL, which is resolved by the N2T resolver is \texttt{https://n2t.net/ark:/12345/fk1234} \cite{n2t}. To access metadata, a question mark ("?") has to be appended at the end of the URL where the API then returns metadata in the Electronic Resource Citation (ERC) format \cite{ark-erc}. 
 
-\subsubsection{PURL}
-PURL is yet another PID type that was developed from the Online Computer Library Center (OCLC). The PURL naming syntax is shown in table \ref{tab:pid}. The \texttt{<protocol>} part specifies the protocol used to access to resolver of the PURL and the  \texttt{<resolver address>} part is the location of the resolver from which the digital object specified
-in the \texttt{<name>} field can be resolved.
+%\subsubsection{PURL}
+%PURL is yet another PID type that was developed from the Online Computer Library Center (OCLC). The PURL naming syntax is shown in table \ref{tab:pid}. The \texttt{<protocol>} part specifies the protocol used to access to resolver of the PURL and the  \texttt{<resolver address>} part is the location of the resolver from which the digital object specified in the \texttt{<name>} field can be resolved.
 
-Basically, a PURL is a URL that points to a resolver that does the mapping
-between the \texttt{<name>} part and the actual URL from which the digital object can be
-retrieved instead of pointing directly to the location from
-which the digital object can be retrieved \cite{icn-bd}.
+%Basically, a PURL is a URL that points to a resolver that does the mapping
+%between the \texttt{<name>} part and the actual URL from which the digital object can be
+%retrieved instead of pointing directly to the location from which the digital object can be retrieved \cite{icn-bd}.
 
-The Federal Depository Library Program (FDLP) is a U.S. government program which utilizes the use of PURL for uniquely identifying federal government publications and making them publicly available \cite{purl-fdlp}. An example link that their PURL resolver resolves to its location is \texttt{https://purl.fdlp.gov/GPO/gpo121591}.
-Worth mentioning is that no additional metadata is used in PURLs \cite{eudat-pid}.
+%The Federal Depository Library Program (FDLP) is a U.S. government program which utilizes the use of PURL for uniquely identifying federal government publications and making them publicly available \cite{purl-fdlp}. An example link that their PURL resolver resolves to its location is \texttt{https://purl.fdlp.gov/GPO/gpo121591}.
+%Worth mentioning is that no additional metadata is used in PURLs \cite{eudat-pid}.
 
 
 
@@ -154,23 +151,31 @@ The information stored in the PIT and FIB can be used to determine how to forwar
 % discuss RMA from book
 As briefly described in section \ref{introduction-related-work}, McCabe's book "Network Analysis, Architecture, and Design" \cite{mccabe2010network} is about applying a systems methodology approach towards network design. McCabe's approach consists out of three core phases; analysis, architecture and design. These phases in McCabe are describe how to make technology and topology decisions in a network. These decisions are guided based on inputs for the three core phases, the initial input can be from users and/or from network metrics. Consecutive processes use the output of previous processes as input, thus these processes that are interconnected. In this section we will describe McCabe's method in more detail.
 
-In figure \ref{fig:mccabe-process} the three core phases are illustrated in \textit{italic} while the processes are in normal text. In order to highlight the core phases in the figure, they are \underline{underlined}. The first phase (analysis) has as goal to understand the network and potential problems in terms of performance and efficiency in order to determine network requirements. This is done by developing sets of problem statements and objectives that describe what the target network should address. Therefore, historical data from network management (monitoring), requirements gathered from the network users, staff and management are included in the analysis phase. Furthermore, these metrics are then compared to the relationships between users, applications, devices and other networks in order to determine if requirements match with the user and network expectations. The second and third phase (architecture and design) uses the output of the first phase to establish a high-level design of the network. This network design determines which technology and topology choices are justified to improve the network requirements established in the first phase. These phases are intended to be iterative and by no means define a final architecture design. This is due to the fact that requirements, technology and user behaviour can change and with that the network design.
+In figure \ref{fig:mccabe-process} the three core phases are illustrated in \textit{italic} while the processes are in normal text. In order to highlight the core phases by name they are \underline{underlined} in the figure. The first phase (analysis) has as goal to understand the network and potential problems in terms of performance and efficiency in order to determine network requirements. This is done by developing sets of problem statements and objectives that describe what the target network should address. Therefore, historical data from network management (monitoring), requirements gathered from the network users, staff and management are included in the analysis phase. Furthermore, these metrics are then compared to the relationships between users, applications, devices and other networks in order to determine if requirements match with the user and network expectations. The second and third phase (architecture and design) uses the output of the first phase to establish a high-level design of the network. This network design determines which technology and topology choices are justified to improve the network requirements established in the first phase. The fourth process is implementing the design, test if requirements are met and finally accept the implementation. These phases are intended to be iterative and by no means define a final architecture design. This is due to the fact that requirements, technology and user behaviour can change and with that the network design.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth/2]{Images/mccabe-process.png}
-\caption{Cyclic and iterative nature of McCabe's processes.}
+\caption{Cyclic and iterative nature of McCabe's processes and phases.}
 \label{fig:mccabe-process}
 \end{figure}
 
 \subsection{TOSCA}
+\label{overview-tosca}
 % Why use it, why did we use it? Are there alternatives? Compare them shortly - if needed
 % Highlight popularity, Google, RedHat, Canonical, etc. - to emphasize that TOSCA won't go away soon, but keeps growing
-% Merge McCabe's method and tosca as one method
-
 %Describe DRIP, OpenStack and an orchestrator in general
+OASIS, an organization which is a global nonprofit consortium that works on open-standards, published the first TOSCA standard in 2014. The TOSCA standard is meant to standardize data modeling for cloud orchestration environments and applications. The latest version 1.1 standard \cite{tosca-standard}, was released in 2018. In this section we will highlight the important features of TOSCA, relevant to our research scope. Section \ref{method-planning} will merge TOSCA with McCabe's method (section \ref{overview-mccabe}).
+
+Portability and automated management of enterprise IT infrastructures are major concerns. Infrastructures may need to run on heterogeneous components due to application needs. Having different descriptions of deployment and management for each environment complicates an infrastructure. This challenge introduces new requirements and concepts for deployment, configuration, operation and termination of components that make up an entire infrastructure. TOSCA provides a method to describe these components in generic modeling templates. In which an orchestrator can be used to implement these descriptions. Thus, TOSCA provides a single description for an entire infrastructure, which is then implemented by an orchestrator. This results into a portable (can be run by any orchestrator that understands TOSCA) and automated (implementations done by orchestrator) method of infrastructure management. This allows interoperability and reusability of TOSCA descriptions on different cloud providers. Seaclouds\footnote{\url{http://www.seaclouds-project.eu/}} (EU FP7 funded project), not to be confused with SeaDataCloud, is already managing infrastructures based on TOSCA. Google, Red Hat, Canonical and IBM are also involved with the development of TOSCA, signifying that broader adoption may follow in the future.
+
+TOSCA descriptions consist out of the following core components; nodes, relationships and interfaces. Nodes can be a host, container or VM and are connected to each other through relationships such as dependsOn, hostedOn and connectsTo. These relationships can be used to describe that a VM is 'hosted on' a host (e.g. a bare metal machine). Or that a set of containers 'depend on' each other for functionality. Such as a containerized web application that requires a database, facilitated by another container. Interfaces are used as hooks to trigger actions, these actions are create, configure, start, stop or delete. These hooks can be triggered to e.g. configure and create containers, stop or start a service or do system maintenance such as delete artifacts after a service is stopped. Interfaces are used to control the life cycle of a component 
 
 \subsection{Virtualization}
+Virtualization is part of modern day infrastructures. It provides more efficient use of resources and flexibility because multiple VMs and containers can be deployed on any host that support them. VMs are complete operating systems that run in complete isolation from its host. Containers on the other hand share the kernel of its host and offer user-space isolation, which is relatively less isolation when compared to a VM. However, containers are more resource friendly than VMs in terms of needed compute power and disk space. This section will briefly describe these two forms of virtualization.
+
+Cloud providers such as Amazon provide easy access to compute resources, one way to access these resources is by deploying a VM on their platform. Resources can be added or removed via management interfaces or API's. This allows an infrastructure, that runs on the Amazon platform, to flexibly scale in or out. Containers offer the ability to package software components together with all dependencies (e.g. libraries and binaries), such a package is called a container image. Docker is a popular platform to build and manage container-based virtualization. Once a Docker image is built it can be distributed through so-called Docker registries, such as Docker Hub\footnote{\url{https://hub.docker.com/}}. Kubernetes\footnote{\url{https://kubernetes.io/}} can be used to automate application deployment, scaling, and management of containers. In Kubernetes a container is called a pod, this may be a Docker container. These Kubernetes pods can be deployed in a cluster of Kubernetes nodes, spanning through e.g. different data centers. This offers great flexibility by packaging an application in a pod and then scale the application in or out through different data centers with Kubernetes. Kubernetes also offers availability features, such as automatically restart a pod when a crash occurs or load balance requests by using different pods in e.g. a round-robin fashion.
+
 %\subsubsection{Docker}
 %What is it, why use it, why do we use it and how?
 

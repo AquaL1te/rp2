@@ -1,6 +1,39 @@
 \section{Planning an NDN network with scalability in mind}
+% first discuss how this all comes together; use case --> related work --> mccabe's --> tosca --> poc
+
+% discuss relevant performance concerns/improvements from related work
+% tcp vs udp
+% cache size 1.3GB with 1 GB cache at edge
+% twice the size of the biggest object in ndn for great performance
+% cache stratgy 'leave copy everywhere' as baseline
+% ascending order with least recently used cache replacement
+% forward strategy doesn't really matter at this point
+
+
+% use that as input for mccabe's method of planning a network
+% goal: higher throughput, distributed load, flexible scaling
+% use performance as input --> i suppose can only be used for deployment strategy (vm's --> docker), or be creative; append own method for this research
+% this has as output the network diagram and certain requirements - briefly describe these requirements
+
+
+% these then have to be merged into a tosca diagram
+% describe tosca, applied with input from mccabe
+% explain tosca diagram, the features, how it could meet the requirements defined by mccabe
+
+
+% then describe what will be proven with the proof of concept
+% that would be that tosca isn't implemented, but kubernetes its config is used as an abstraction for this
+% with kubernetes its config the ndn network can be controlled in an sdn-style way
+% describe ndn docker containers (how they can be controlled via kubernetes)
+% conclude with the result of easy scaling an ndn network
+
+
+
+
 \subsection{Planning an NDN network}
 \label{method-planning}
+% Merge McCabe's method and tosca as one method
+
 Merge McCabe + TOSCA, use related work with NDN known performance bottlenecks/improvements as input
 
 \subsection{NDN scalability}
