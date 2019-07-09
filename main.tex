@@ -11,6 +11,7 @@
 \usepackage{csquotes}
 \usepackage[style=numeric,backend=biber]{biblatex}
 \usepackage[acronym]{glossaries}
+\usepackage{url}
 %,nomain,nonumberlist
 \addbibresource{references.bib}
 
@@ -51,14 +52,14 @@ by\\[0.2cm]
 \end{titlepage}
 
 \tableofcontents
-\clearpage
+%\clearpage
 
-\include{Sections/acronyms}
+%\include{Sections/acronyms}
 \include{Sections/abstract}
 \include{Sections/introduction}
 \include{Sections/overview}
-\include{Sections/method}
-%\include{Sections/results} % if needed, results can be discussed in method at the end of that section
+\include{Sections/interoperability}
+\include{Sections/planning-scaling}
 \include{Sections/discussion}
 \include{Sections/conclusion}
 \include{Sections/future_work}

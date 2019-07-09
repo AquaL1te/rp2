@@ -39,4 +39,3 @@ Check if there is a reference to the used figures. All figures used in this docu
 
 Tables: Table title above the table
 Figures: Figure title below the figure
-
