@@ -1,11 +1,11 @@
-\section{PID interoperability with NDN}
+\section{PID interoperability with NDN}\label{pid-poc}
 %Short intro about it
 %-Show our model
 
 In this section, we propose a model shown in figure \ref{fig:sdc_model} to be demonstrated in our PoC. The proposed model achieves PID interoperability within the NDN namespace and makes adding future PID types to be achieved easily.
 \newline
 \newline
-Our model adheres to the following principles, which will be discussed in detail.
+Our model adheres to the following principles, which will be discussed in more detail in this section.
 
 \begin{itemize}
     \item{Translation is transparent to the user}
@@ -20,44 +20,64 @@ Our model adheres to the following principles, which will be discussed in detail
 \label{fig:sdc_model}
 \end{figure}
 
-The model that we specified for our PoC consists of the following components, each with their own functionality: the PID server, PID2NDN gateway and client. These components are all part of the NDN network. The general idea is that a user enters a PID of the object that the user want to retrieve at the client and gets back the requested object. The retrieval of the objects depends if the object is already in the NDN network or not.  
+The model that we specified for our PoC consists of the following components, each with their own functionality: the PID server, PID2NDN gateway and client. These components are all part of the NDN network. The general idea is that a user enters a PID at the client of the object that the user want to retrieve and gets back the requested object. The retrieval of the objects depends if the object is already in the NDN network or not.  
 
 \subsection{PID server}
-The PID server is maintained by the PID provider, which identifies objects of a particular PID type. The PID types we cover in our PoC are highlighted in section \ref{pid-types}. For our PoC we have set up our own Handle PID server with Cordra software. We got allotted the Handle prefix \texttt{20.5000.481} by the Handle registry to be used for object identification. Next to this, we also used the resolver of the Dutch Royal Library URNs as well as PANGAEA which resolves DOIs for our PoC.
+The PID server is maintained by the PID provider, which identifies objects of a particular PID type. The PID types we cover in our PoC are highlighted in section \ref{pid-types}. For our PoC we have set up our own Handle PID server with Cordra software \cite{cor}. We got allotted the Handle prefix \texttt{20.5000.481} by the Handle registry to be used for object identification. Next to this, we have also used the resolver of the Dutch Royal Library for resolving URNs as well as PANGAEA, which resolves DOIs for our PoC.
 
 \subsection{Client}
 The role of the client is to make the user either retrieve the requested object from the corresponding PID provider where the object resides or from the NDN network. 
-The client receives a PID from the user input, which can be any kind of PID type. The client then opens a socket and sends the user request to the gateway. After the gateway does the translation, it sends back to the client either a translated NDN name from the PID if the object is available in the NDN network or a link to the PID server if it is not in the NDN network. If a NDN name is sent back to the client, the client then request the obejct from the NDN network. If not, it sends a request to the PID server for object retrieval.
+The client receives a PID from the user input, which can be any kind of PID type. The client then opens a socket and sends the user request to the gateway, which corresponds with step 1 and 2 in figure \ref{fig:sdc_model}. After the gateway does the translation, it sends back to the client either a translated NDN name from the PID if the object is available in the NDN network or a link to the PID server if it is not in the NDN network, this corresponds to step 6a in figure \ref{fig:sdc_model}. If a NDN name is sent back to the client, the client then requests the object from the NDN network, this is shown as step 7a and step 8 till 10 in figure \ref{fig:sdc_model}. If not, it sends a request to the PID server for object retrieval, which corresponds to step 7c in figure \ref{fig:sdc_model}. Object retrieval is done at client side, otherwise the gateway has to retrieve the object itself before sending it to the client.
+%Besides, the gateway already does the translation for each client and inserts object in NDN (if a object is not avalaible in NDN). 
+
+This is all transparent to the user. The user might not even be aware of an NDN network. The user only enters a PID as input for the client, without even specifying the link of the web resolver that handles the PID and gets redirected automatically by the client to either the PID server or NDN network. No further user input is needed as everything is handled by the gateway, which will be discussed below in section \ref{gw}, %except for entering in the PID, 
+unlike previous models, which require user input after the client has translated the PID to NDN name \cite{ndn-app-aware}. 
 
 %.....The user types in PID and gets redirected automatically to either the PID server or NDN network......
 
-\subsection{Gateway}
-we also implemented the resolver of the Dutch Royal Library in our gateway for resolving URNs as well as PANGAEA which resolves DOIs. 
+\subsection{Gateway (in progress)}\label{gw}
+Our PID2NDN gateway follows The first thing the gateway is responsible for is translating the PID it receives from the client to a NDN name. This can be any PID type, in our PoC we have implemented the Handle PID type scheme of the Handle PID server we set up, the URN PID type scheme of the Dutch Royal Library, as well as the DOI type scheme of PANGAEA. The gateway receives a PID from the client, without the link of the corresponding web resolver of the PID type. Based on pattern matching of the PID type scheme, the gateway detects what kind of PID type it has to deal with and appends the corresponding link of the web resolver of the PID type it receives. 
+%Pattern matching is done based on the patterns of 
+The patterns of most standardized PID type schemes are maintained in the ePIC Data Type Registry and can be used for implementation in the gateway we propose \cite{dtr}. 
 
-Unlike Mousa's solution, where the PID to NDN translation resides at client side, in our model the gateway does the translation. Which means that the PID schemes used within our case
-the scheme of the pid type
-ndnputchnks
-scheme of PID type has to be taken into account. USe pattern matching
+After this, the gateway checks if the object is already available in NDN, this can be done with a simple ping to the object for example (or looking into the CS?)with the tools we used \cite{ndn-tools}. 
+If the object is available in NDN, the gateway send the translated NDN name back to the client where the client retrieves the object from NDN as shown in figure \ref{fig:seq_ndn}. If the object is not available in NDN, the gateway already sends back the PID link to the client to be requested by the client from the PID server as shown in figure \ref{fig:seq_pid}, before retrieving the object itself to insert it in NDN otherwise the client needs to wait for this.
+%(so the client does not have to wait for the gateway to first retrieve the object and then inserting it in NDN) 
+%After sending the PID link back to the client, the gateway will also requests the object from the PID server for insertion in NDN. 
+The PID link that is sent to the client contains the link to the corresponding PID web resolver and the PID itself. For our PoC we use the tool \texttt{ndnputchunks}, which is part of the \texttt{ndn-tools} software for object insertion in the NDN network \cite{ndn-tools}.
+
+In a previous research performed by Mousa, the PID to NDN translation happens at the clients side \cite{ndn-app-aware}. Which means that every time a new PID type is introduced, the client side has to be updated as Karakannas also states in his research \cite{icn-bd}. In our proposed model, the PID to NDN translation is done at the gateway. Thus, for adding future PID types in our proposed model, only the gateway needs to be updated with the newly introduced PID type scheme 
+%and its corresponding web resolver link 
+to support a new PID type. 
+
+If there is need for filling in missing gaps for dividing the PID in the NDN hierarchy, metadata can be used as described by Olschanowsky et. al. \cite{ndn-man}.
+GW XML/JSON/or whatever parser to parse metadata that the PID resolver utilizes if needed for usage to fill in gaps of a NDN name, sometimes this is needed for missing name components that are needed to hierarchically divide the PID into NDN as researched by Olschanowsky et. al. in section related work. 
+
+
+
+%In our proposed model, the PID to NDN translation is done at the gateway. Only the gateway has to be updated with the schemes that the newly introduced PID types use. 
+
+%For adding future PID types in our proposed model, the PID to NDN translation is done at the gateway. Thus only the gateway needs to be updated with the newly introduced PID type scheme and its corresponding web resolver link to support a new PID type.  
+
+%After pattern matching is done and the PID type is known, the PID will get assigned a link to corresponding web resolver of the PID type.
+
+%Unlike Mousa's solution, where the PID to NDN translation resides at client side, in our model the gateway does the translation. Which means that the PID schemes used within our case
+%the scheme of the pid type
+%ndnputchnks
+%scheme of PID type has to be taken into account. Use pattern matching
 %\subsection{Interoperability}
 %Way of doing it described in detail, describe the 'how' answer
-
 %Our solution tackles the issue of Mousa and Karakannas where the client has to be updated.
 TO-DO:
+%If not in NDN, sequence diagram PID server:
 \newline
-Explain model in detail.
-PID consortium for pattern matching. PID consortium defines standards.
-
-Pattern matching is used for matching the PID types. And they are here: ptr consortium.
-ePIC Data Type Registry (testing)
-
-The user types in PID and gets redirected automatically to either the PID server or NDN network.
-
-We don not match “handle” or “handle:”, “doi” or “doi:“, “urn” or “urn:”. As that really depends on everey PID provider (KB does not do this, urn is mentioned in the URL but this can already be matched according to pid-consortium!) 
+As the user only inputs a PID without even specifying the web resolver link of the specific PID type. After the pattern is matched, the correct web resolver link to resolve the PID type is appended by the gateway and send back the complete link of the PID object at the PID server to the client. This is shown in the sequence diagram shown in figure \ref{fig:seq_pid}.
 
 Take in account long NDN names as described by Yuan et al. \cite{yuan2012scalable} which is mentioned in section \ref{introduction-related-work}.
 
-GW XML/JSON/or whatever parser to parse metadata that the PID resolver utilizes if needed for usage to fill in gaps of an NDN name, sometimes this is needed for missing name components that are needed to hierarchically divide the PID into NDN as researched by Olschanowsky et. al. in section related work. 
-This depends on the PID provider how metadata is served.
+
+GW XML/JSON/or whatever parser to parse metadata that the PID resolver utilizes if needed for usage to fill in gaps of a NDN name, sometimes this is needed for missing name components that are needed to hierarchically divide the PID into NDN as researched by Olschanowsky et. al. in section related work. 
+This highly depends on the PID provider in which way the metadata is served as described in section Technical overview metadata: do I clearly state there that every PID type handles metadata on its own way? XML, JSON etc.
 
 Our proposed gateway is similar to The Names to Things resolver (N2T), which can also resolve different PID types, by stating and adding the PID type and the regex pattern. https://n2t.net/
 
@@ -67,6 +87,40 @@ Metadata, rules, web resolver link or not etc. all depending on PID provider and
 
 Mention using ndnputchunks and ndncatchunks of ndn-tools for PoC. Data is cached in memory and takes 3x the size for encoding (I have a source for this). Caching on intermediate routers seems only to take 1x the size as seen yesterday in my mini experiment. For a persistent file cache, compile file-server with NFD, used nfds or ...
 
-By taking into account the PID type rules...
 
-Karakannas states that clients code has to be updated everytime.
+%If in NDN, sequence diagram NDN:
+
+%The gateway send back a string to the client so that the client retrieves the object and not the gateway, to reduce load on the gateway as the gateway also has to insert the object in NDN, to make it available in NDN the next time a user request the object by its PID.
+
+%In the gateway we implemented the Handle PID type scheme of our Handle PID server, the URN PID type scheme of the Dutch Royal Library, as well as the DOI type scheme of PANGAEA.
+
+%Explain model in detail.
+%PID consortium for pattern matching. PID consortium defines standards.
+
+%Pattern matching is used for matching the PID types. And they are here: ptr consortium.
+%ePIC Data Type Registry (testing)
+
+
+%We don not match “handle” or “handle:”, “doi” or “doi:“, “urn” or “urn:”. As that really depends on everey PID provider (KB does not do this, urn is mentioned in the URL but this can already be matched according to pid-consortium!) 
+
+
+%By taking into account the PID type rules...
+
+%Karakannas states that clients code has to be updated everytime.
+
+\begin{figure}[H]
+%\flushleft
+    \centering
+    \makebox[0pt]{%
+    \includegraphics[width=0.96\paperwidth]{Images/pid_seq2.png}}
+    \caption{Handle PID request\label{fig:seq_pid}}
+
+\end{figure}
+
+%0.52
+
+\begin{figure}[H]
+\includegraphics[scale=0.75]{Images/ndn_req.png}
+\caption{Handle NDN request}
+\label{fig:seq_ndn}
+\end{figure}

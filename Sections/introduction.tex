@@ -12,6 +12,7 @@
 % Short abstract introduction here about this section (can be done when finished)
 
 \subsection{Background}
+\label{introduction-background}
 % What is SeaDataCloud's exact problem? Make the problem clear so that our solution fits the problem. Try to look at it from all angles, like an os3 teacher would
 % SeaDataCloud is a distributed infrastructure to manage large and diverse sets of data about seas and oceans. This Pan-European network offers data access to support scientific workflows which varies from climate change prediction to offshore engineering\cite{sdc}. SeaDataCloud has 8 institutes with over 100 data centers, with the aim to make research data available to scientist.
 
@@ -76,7 +77,7 @@ Zhao et al. progressed the research done by Karakannas and Mousa and proposed an
 \begin{itemize}
   \item PID2NDN gateway; primarily responsible for resolving PIDs to NDN names.
   \item NDN4PID router image; an NDN node that implements a virtualized NDN router.
-  \item NDN4PID manager; automates the management of the NDN overlay in cloud or e-infrastructure.
+  \item NDN4PID manager; automates the management of the NDN overlay in\newline cloud or e-infrastructure.
 \end{itemize}
 
 Olschanowsky et. al. looked into translating climate modeling scheme filenames, used by CMMAP applications at Colorado State University, to a name usable in NDN. The researchers designed a NDN name translator to support the data management needs of CMMAP. The NDN name translator incorporates a naming schema that is designed to be compatible with existing climate modeling schemas, like CMIP5, while allowing for some flexibility for project-specific requirements. 
@@ -126,10 +127,8 @@ In this section we will formulate our research question based on SeaDataClouds p
 
 As SeaDataClouds proposed solution only supports one PID type at the moment, we will look into supporting different PID types to find a feasible solution to implement future PID types easily. This will be answered with the following subquestions.
 \begin{itemize}
-    \begin{itemize}
-	    \item How to support different PID types?
-	    \item How to incorporate extensibility for future PID schemes?
-	 \end{itemize}   
+    \item[--] How to support different PID types?
+    \item[--] How to incorporate extensibility for future PID schemes?
 \end{itemize}
 
 As SeaDataClouds current model is a centralized solution, which can cause a lot of congestion with many users and does not distribute load efficiently and reliably, their proposed model incorporates NDN to overcome the issues of traditional host-to-host oriented techniques. Therefore we will be looking into introducing NDN in SeaDataCloud. To achieve this, the following research question needs to be answered.   
@@ -142,11 +141,9 @@ An important aspect is to efficiently use an NDN network in such a cloud infrast
 %To plan and scale an NDN network, 
 the known NDN scaling problems must be analyzed. Furthermore, we will look into methods to make it possible to plan and scale an NDN network by deploying (orchestrating) components of an NDN network in a SDN-like way.
 \begin{itemize}
-    \begin{itemize}
-	    \item Which NDN scaling problems are known?
-	    \item Which method can be used to plan an NDN network?
-	    \item How to deploy an NDN network in a scalable way?
-	\end{itemize}
+    \item[--] Which NDN scaling problems are known?
+    \item[--] Which method can be used to plan an NDN network?
+    \item[--] How to deploy an NDN network in a scalable way?
 \end{itemize}
 
 
