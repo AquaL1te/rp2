@@ -3,7 +3,11 @@ TOSCA blueprints are conceptual
 The VM and Kubernetes was deployed manually
 Full implementation developed needed with an orchestrator such as e.g. DRIP
 NDN is still experimental
-Explore performance bottlenecks (benchmarking)
+
+Explore performance bottlenecks (benchmarking)" 
+There is a lot of research to do in benchmarking. A lot of parameters can be configured to look for the most optimal configuration for NDN networking, such as exploring different MTU sizes, congestion treshold (packet delay/loss), pipeline type (for example cubic or aimd), NDN TCP vs NDN UDP, and running al these tests with multiple consumers. For benchmarking, the tool ndn-traffic-generator \footnote{https://github.com/named-data/ndn-traffic-generator} can be used to generate Interest and Data traffic in an NDN network. 
+
+
 Test routing protocols (e.g. OSPFN)
 Extent Kubernetes with intelligence
 Where to deploy NDN routers (containers)?

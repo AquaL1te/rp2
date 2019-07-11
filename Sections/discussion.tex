@@ -1,2 +1,9 @@
 \section{Discussion}\label{disc}
 What 'advice' to give to the reader? Discuss difficulties (e.g. tosca) and such.
+
+% include preliminary performance measurements, emphasize that it's outside the scope of our research, no real conclusions should be made, just observations, this needs to be made very clear
+
+%Metadata, rules, web resolver link or not etc. all depending on PID provider and cloud itself.
+
+%Discussion or future work.
+For our PoC we used ndnputchunks to insert an object into NDN. However, ndnputchunks does not serve a file, but works with standard input stream. Data is cached in-memory and takes up to three times the size of the object for encoding \cite{ndnput-mem}. For a persistent file cache we recommend compiling ndn-cxx with file-server\footnote{https://github.com/yoursunny/ndn6-tools/blob/master/file-server.md}, \footnote{https://github.com/wentaoshang/NDNFS}NDNFS or \footnote{https://github.com/named-data/repo-ng}repo-ng.  

@@ -3,6 +3,9 @@
 \usepackage[margin=0.8in]{geometry}
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{url}[hyphens]
+
+%hyperref causes the Illegal parameter error
 \usepackage[breaklinks]{hyperref}
 \usepackage[dvipsnames,todonotes]{xcolor}
 \usepackage{todonotes}
@@ -10,22 +13,23 @@
 \usepackage{booktabs}
 \usepackage{csquotes}
 \usepackage[style=numeric,backend=biber]{biblatex}
-\usepackage[acronym]{glossaries}
-\usepackage{url}
+%\usepackage[acronym]{glossaries}
+%\usepackage{url}[hyphens]
+%\usepackage{url}
 %,nomain,nonumberlist
 \addbibresource{references.bib}
 
 % \setcounter{section}{-1}
 
 \usepackage{helvet}
-\lstset{backgroundcolor = \color{black},
+\lstset{backgroundcolor = \color{white},
     basicstyle=\ttfamily\footnotesize\color{Cerulean},
     keywordstyle=\bfseries,
     breaklines=true,
     postbreak=\mbox{\textcolor{Rhodamine}{$\hookrightarrow$}\space}
 }
 
-\makeglossaries
+%\makeglossaries
 
 \begin{document}
 \begin{titlepage}
@@ -65,5 +69,4 @@ by\\[0.2cm]
 \include{Sections/future_work}
 
 \printbibliography
-
 \end{document}

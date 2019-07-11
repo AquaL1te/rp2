@@ -1,17 +1,21 @@
-\section{Planning an NDN network with scalability in mind}
-% first discuss how this all comes together; use case --> related work --> mccabe's --> tosca --> poc
+\section{Planning an NDN network}
+\label{planning-ndn}
 This section will discuss the method we used in order to plan an NDN network with scalability in mind. Scalability is defined as capacity to be changed in size or scale. In order to plan an NDN network with this goal in mind we will use a combination of McCabe (section \ref{overview-mccabe}) and TOSCA (section \ref{overview-tosca}). McCabe will function as a method to guide design choices with scalability and performance requirements in mind. While TOSCA will function as an implementation method that provides the means to control the whole life cycle of the network design with scalability and performance in mind as well. Furthermore, a proof of concept will be discussed that we implemented in a limited scope in order to proof the method in practice.
 
 \subsection{Design requirements and analysis (McCabe)}
-% define relationships must be more explicit here --> can be used in tosca section then as well as input
+\label{planning-requirements}
+% define relationships must be more explicit here --> can be used in tosca section then as well as input (needs to be written as well)
 In this section we will apply McCabe's approach in order to establish the design requirements and analyze the properties of NDN and how it can be applied to solve the use case of SeaDataCloud. The use case of SeaDataCloud (section \ref{introduction-background}) calls for data request distribution. NDN is designed to make data distribution possible and is gaining popularity in big science. Another requirement is flexible scalability, this will be addressed in the design. The first step is to make an overview of the requirements and known NDN scalability and performance issues.
 
 The following analysis is based on the design requirements and will provide a baseline for the high-level network design. As discussed in the related work (section \ref{introduction-related-work}), several key scalability and performance metrics were highlighted. Several NDN-specific design choices need to be made. These include the consideration that NDN is an overlay, on top of e.g. TCP/IP. Within this context it was concluded that TCP provided the most satisfying performance when compared to UDP. Furthermore, there are several NDN strategies to choose from. The 'leave copy everywhere' cache decision strategy and the 'least recently used' cache replacement strategy were considered to be the overall best performing choices. However, for the forward strategies there was no decisive conclusion on which a selection could be based on. Therefore, we will use the default forwarding strategy; best-route. The performance configurations mentioned can be configured in the \texttt{nfd.conf} file of the NDN-CXX\footnote{\url{https://github.com/named-data/ndn-cxx}} application. NDN-CXX is one of the most mature software implementations of NDN and therefore used in our design. Other performance optimization solutions which were mentioned in the related work require changes in the source-code, which is outside the scope of this research.
 
+Furthermore, for hardware requirements the following hardware requirements baseline is determined based on software documentation, the SeaDataCloud use case (section \ref{introduction-background}) and related work (section \ref{introduction-related-work}). For memory on the VMs, at least 12GB is recommended. This is determined based on recommended system requirements for Kubernetes\footnote{\url{https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/}} and the fact that the use case is I/O throughput, I/O caching in memory benefits performance. In order to have sufficient disk space to cache NDN data objects, install software, store logs and containers, a minimum of 100GB of storage is recommended as a baseline. Based on related work, a minimum of 4 CPU cores (Xeon) running at 2.0GHz is recommended.
+
 \subsection{Architecture (McCabe)}
+\label{planning-architecture}
 With the design requirements established we can develop a high-level network design. As mentioned in section \ref{overview-virtualization}, virtualization allows the flexible allocation of cloud resources via VMs and scalability of software application by the use of containers. In order to ease NDN scalability, different data centers can be used to deploy NDN nodes. These nodes can then provide locally cached copies of data objects. And thus providing data distribution which lowers the chance of network congestion for SeaDataCloud.
 
-In figure \ref{fig:high-level-network-design} we illustrate our high-level network design. 
+In figure \ref{fig:high-level-network-design} we illustrate our high-level network design. In this illustration there are two conceptual cloud providers; 'mulhouse' and 'nimes'. In both of these cloud providers a VM is deployed in order to allocate resources. The NDN application (NDN-CXX) was containerized for portability and scalability purposes. Different roles are instantiated 
 
 \begin{figure}[H]
 \centering
@@ -20,18 +24,32 @@ In figure \ref{fig:high-level-network-design} we illustrate our high-level netwo
 \label{fig:high-level-network-design}
 \end{figure}
 
+The NDN-CXX application is containerized and deployed via a Kubernetes cluster (section \ref{overview-virtualization}), spread over two conceptual cloud providers; ('mulhouse' and 'nimes'). These cloud providers are spread geographically in order to provide users with a local NDN cache. To acquire resources from these cloud providers a VM needs to be deployed first. If more resources are required, then this can be done by deploying more VMs. Furthermore, if needed, VMs can be deployed in other cloud providers spread out geographically, expanding the data distribution availability. Kubernetes can be used to keep central control over the NDN network, where pods can be created, removed and managed. These pods can be spawned from images and custom tailored for their specific task, as described in section \ref{overview-virtualization}. In our high-level network design (figure \ref{fig:high-level-network-design}) we have three different types of NDN nodes. The producer is assigned the task to make data available in the NDN network. The consumer is assigned to request data from the producer. However, in NDN, any node that has named data, can reply to interest requests. So the producer and consumer role are interchangeable. The router's task is to forward interest packets between the two cloud providers. This forwarding is done on the NDN overlay, which runs on top of the internet (underlay). In summary; resources can be scaled in or out by deploying more VMs. In order to provide users a local NDN cache, a regional cloud provider can be used to deploy a VM. By the use of Kubernetes, the NDN application can be scaled in and out as well. However, cache misses are expensive since they require a rebuild of the cache, which puts load on the original publisher of the data; SeaDataCloud. Therefore, pods preferably are configured with persistent data volumes (section \ref{overview-virtualization}), on which the cached data can be stored.
 
+\subsection{Deploying an NDN network (McCabe and TOSCA)}
+% Use relationships as defined by McCabe
+\label{planning-deploying}
+Now that the network analysis, design and architecture are defined, a deployment strategy is needed. The high-level design (figure \ref{fig:high-level-network-design}) needs to become deployable with a scalable method. Scalable in this context means that a single deployment strategy can be used for different cloud providers. As described in section \ref{overview-tosca}, TOSCA is a standard to describe the complete life cycle of an infrastructure. There is a growing support for TOSCA template descriptions in cloud providers. Having a single template description for deployment benefits portability and reproducibility of an infrastructure on different cloud providers.
 
-% use that as input for mccabe's method of planning a network
-% goal: higher throughput, distributed load, flexible scaling
-% use performance as input --> i suppose can only be used for deployment strategy (vm's --> docker), or be creative; append own method for this research
-% this has as output the network diagram and certain requirements - briefly describe these requirements
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{Images/tosca-diagram.png}
+\caption{TOSCA diagram.}
+\label{fig:tosca-diagram}
+\end{figure}
 
+In figure \ref{fig:tosca-diagram} a TOSCA diagram is illustrated. This diagram represents an abstract template description of the TOSCA relationships, in which the grey rectangular boxes are the core scalability factors. As described in section \ref{overview-tosca}, TOSCA consists out of several types; nodes, relationships and interfaces. The scaling properties are highlighted in the rectangular areas. The left area, highlighted as 'scaling in/out resources' contains a dependency chain of several node types. This dependency chain is also in a numerical fashion. Before a pod can be deployed on Kubernetes (step 2 to 5), a VM needs to exist (step 1). This is described by the 'dependsOn' relationship. Furthermore, with the requirements defined in section \ref{planning-requirements}, input constraints are described. These constraints are used by the orchestrator to make sure that the NDN infrastructure has sufficient resources available to operate. Once a VM is deployed the dependency for Kubernetes is satisfied, thus Kubernetes can be setup (step 2). Kubernetes can ten deploy pods by the use of interfaces (step 3). These interfaces feed the containers with environment variables such as the gateway, a list of routes, the transport protocol for NDN, the NDN strategies and on which node this pod needs to run. The environment variables are given to the interface via the TOSCA inputs. These environment variables are then used by scripts that run inside the pods to setup NDN. Several constraints are set for these environment variables such as which valid transport protocols can be used for NDN, which NDN strategies are valid and which nodes are available. These constraints are defined with e.g. 'valid\_values' or 'greater\_than' definitions. These constraints help to guide the orchestrator to verify the inputs that are given for the template description. As illustrated in the second gray area "scaling in/out the application", several pods can be instantiated from the image (step 4, 5a, 5b and 5c). These are the pod roles as described in section \ref{planning-architecture}. These pods form a network and therefore are connected via the 'connectsTo' relationship. This network expands over to other Kubernetes nodes in the cluster due to the use of the Kubernetes built-in overlay network. Therefore, multiple pods can be deployed and form the NDN overlay. 
 
-% these then have to be merged into a tosca diagram
-% describe tosca, applied with input from mccabe
-% explain tosca diagram, the features, how it could meet the requirements defined by mccabe
+\subsection{Proof of concept}
+\label{planning-poc}
+With the methodology defined, in which scalability and performance requirements are met and a method for deployment is described, a proof of concept will be used to test the methodology. The orchestrators mentioned in section \ref{overview-tosca} are still in a prototype phase. Therefore, in our proof of concept we deployed the VMs and Kubernetes nodes manually. In practice the life cycle of the Kubernetes pods are managed by a TOSCA orchestrator. Without having a TOSCA orchestrator available, steps two through five in figure \ref{fig:tosca-diagram} will be carried out by Kubernetes exclusively. This can be done by defining the configuration properties of the pods manually. These properties include the NDN function name, e.g. router, producer or consumer. And also includes the routes (NDN name prefixes) and the associated NDN face and the transport protocol to use (TCP or UDP), which are inserted into the NDN FIB by the scripts that run inside the pod. The NDN strategies are also configured by the scripts running inside the pod. Furthermore, if it's not defined where a pod should be running, Kubernetes will make this decision, based on the known resources in the Kubernetes cluster. If for example a Kubernetes node has more memory to spare than other nodes, then Kubernetes will likely decide to spawn the pod there. A Kubernetes node could potentially run in a different cloud provider, in another geographical area. Since the purpose is to provide data distribution through the use of NDN, locality becomes a key factor. Therefore, a pod is specifically assigned to a Kubernetes node in order to provide in-network caching in a specific geographical area.
 
+% refer to the pid interoperability part, which is included in the pods
+% link to the pod configuration in github
+
+\subsection{Results}
+% needs some more work
+As a result, the NDN infrastructure life cycle can be managed from Kubernetes. Our proof of concept lacks a TOSCA orchestrator. Therefore, scaling in or out resources to other cloud provider is not demonstrated. However, scaling in or out the NDN application is demonstrated. This method allows to reconfigure an NDN infrastructure by interacting with Kubernetes as the orchestrator. Therefore, the YAML configuration of Kubernetes acts as the TOSCA template description and Kubernetes, which processes this configuration, acts as the orchestrator. In practice the Kubernetes configuration would be generated based on the TOSCA template descriptions and an orchestrator, e.g. DRIP, would act as the orchestrator.
 
 % then describe what will be proven with the proof of concept
 % that would be that tosca isn't implemented, but kubernetes its config is used as an abstraction for this
@@ -39,16 +57,4 @@ In figure \ref{fig:high-level-network-design} we illustrate our high-level netwo
 % describe ndn docker containers (how they can be controlled via kubernetes)
 % conclude with the result of easy scaling an ndn network
 
-
-
-
-\subsection{Planning an NDN network}
-\label{method-planning}
-% Merge McCabe's method and tosca as one method
-
-Merge McCabe + TOSCA, use related work with NDN known performance bottlenecks/improvements as input
-
-\subsection{NDN scalability}
-Methodology explained, why use something, with what goal?
-
-An NDN network uses routers, bandwidth and other resources to provide its users with a service. Therefore, the methodology described in McCabe can be used to plan an NDN network as well. However, traditional network designs focus on capacity planning, which is over-engineering the amount of network capacity needed. In NDN, with in-network caching, network traffic is distributed by design. Therefore, McCabe's systems methodology will be used, but slightly adapted to NDN. 
+% Methodology explained, why use something, with what goal?

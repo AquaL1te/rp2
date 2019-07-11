@@ -61,7 +61,10 @@ NDN’s minimal functionality includes support for consumer-driven data delivery
 \label{introduction-related-work}
 % Related work summary, only stuff that's directly relevant for our research. Other references can be made later by simply mentioning them. Avoid summarizing related work in too much detail, keep it clear and concise. We need to show our contribution, not what others did.
 
-%\subsubsection{PID interoperability}
+% short intro about this section needed, connecting the pid and ndn part
+In this section...
+
+\subsubsection{PID interoperability}
 In 2014, Karakannas researched the efficiency of ICN for delivering big data with PIDs. PIDs are used in big data infrastructures to identify digital content and research data. An example of a PID type is DOI (Digital Object Identifier), which is used for object identification. In section \ref{pid-types} we will explain more about PID types. The research proposed a mapping architecture for resolving PIDs to ICN names. Karakannas proposed to use a PID to NDN mapping server for every PID type instead of doing the translation on the clients browser. For the latter the researcher states that translation of a PID to NDN name will be highly depended on the clients NDN browser which will need to be updated every time a new rule would be appeared or changed \cite{icn-bd}.
 %The research results showed that in-network caching can offer significant performance benefits, when the cache size of the network elements that perform in-network caching is bigger than the Big Data object size. 
 
@@ -99,7 +102,8 @@ The researchers use datasets of the CMIP5 climate modeling scheme for their rese
 Their catalog design can support the needs of any community, which can be seen as a data provider described earlier, that is able to define and use consistent naming schemes.
 The researchers conclude that their catalog facilitates NDN name discovery and that data management can be made easier for scientific communities as long as they converge on common naming schemes \cite{ndn-man}. 
 
-% Kees part 
+\subsubsection{NDN performance and scalability}
+\label{introduction-related-work-ndn}
 ICN is the common architectural idea of forwarding packets based on their name rather destination (TCP/IP). Research done by Karakannas \cite{icn-bd} concluded that NDN was the only ICN approach that published a specification and workable software to experiment with. As of writing this report, we concluded that this conclusion still holds up. Therefore, this research used NDN for experimentation.
 
 James McCabe's "Network Analysis, Architecture, and Design" \cite{mccabe2010network} book offers a systems methodology approach towards network design. The approach is described in McCabe as "seeing the network part of a larger system, with interactions and dependencies between the network and its users, applications and devices". The methodology put forward by McCabe is to design a network based on several inputs and outputs:
@@ -109,7 +113,7 @@ James McCabe's "Network Analysis, Architecture, and Design" \cite{mccabe2010netw
     \item Design: Determine the physical detail of the architecture based on output of previous steps.
 \end{itemize}
 
-The inputs and outputs used in this method are intended to be iterative and by no means define a final architecture design. This is due to the fact that requirements, technology and user behaviour can change and with that the network design. Section \ref{overview-mccabe} provides a more detailed overview of this method and section \ref{method-planning} describes how it's applied for this research.
+The inputs and outputs used in this method are intended to be iterative and by no means define a final architecture design. This is due to the fact that requirements, technology and user behaviour can change and with that the network design. Section \ref{overview-mccabe} provides a more detailed overview of this method and section \ref{planning-ndn} describes how it's applied for this research.
 
 NDN is relatively new and thus not much is known yet about the performance in different scenarios. In order to plan a network, it would be necessary to know what works and doesn't work for NDN. Large NDN testbeds are still rare. However, there is sufficient research available that focused on particular design choices of NDN. Research done by Lim et al. \cite{lim2018ndn} at a large existing testbed located in the USA \cite{ndn-testbed-status} highlighted a few lessons learned. Lim et al. setup the first intercontinental NDN testbed with the intent to see the benefits for big science (big data). They implemented a name translator for climate-science data, which translated CMIP files to an NDN compatible name. They concluded that NDN provided performance improvements compared to classical climate data delivery techniques based on TCP/IP. A network was used for testing which provided direct links across the USA. The research concluded that NDN over UDP does not properly support large NDN packets (> 64kB). According to the research this was due to UDP's properties of not applying congestion control and proper packet retransmission and resulted in unsatisfying performance. The loss of a single UDP segment resulted in the retransmission of a large NDN data packet, consisting out of many UDP packets. However, NDN over TCP demonstrated a more reliable and faster performance due to the allowance of larger dynamic window sizes and congestion control. Native NDN congestion control is still an open research area \cite{ren2016congestion}, as of writing this report, no proposal has been implemented.
 
