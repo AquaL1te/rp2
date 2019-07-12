@@ -1,2 +1,19 @@
 \section{Conclusion}\label{conc}
-Conclude findings, enforce the value of this research
+%Conclude findings, enforce the value of this research
+
+%In a previous research performed by Mousa, the PID to NDN translation happens at the client side \cite{ndn-app-aware}. Which means that every time a new PID type is introduced, the client side has to be updated as Karakannas also states in his research \cite{icn-bd}. 
+%In our proposed model, the PID to NDN translation is done at the gateway. Thus, for adding future PID types in our proposed model, only the gateway needs to be updated with the newly introduced PID type scheme 
+%and its corresponding web resolver link 
+%to support a new PID type. Next to this, additional metadata can be used in the NDN name for filling in missing gaps and parameters of other values can also be included in an NDN name to request pretrieve parts of objects from the PID srver and store these parts in NDN.
+
+%We conclude that PID interoperability of different PID types within the NDN namespace is possible. 
+
+This research looked into sharing digital objects using NDN, where we achieve PID interoperability of different PID types within the NDN namespace and planning and scaling of such an NDN network. Our findings give insight for distributed infrastructures that manage large and diverse sets of data like our use case SeaDataCloud, to use NDN networking instead of end-to-end communications for retrieving digital objects.
+
+The outcome of the implementation of our model in a PoC shows that our principles regarding PID interoperability within the NDN namespace can be adhered. The translation of PIDs to an NDN name is transparent to the user, as the gateway is responsible for the translation and the client takes care of object retrieval either from the PID provider or from the NDN network. This requires no further user input except for the PID. Translation is achieved by first recognizing the PID type based on pattern matching and then hierarchically divide the PID name to a name in NDN. Support for multiple PID types is also realized by adding the scheme of the PID types at the gateway, which makes it also easily extensible to support future PID types. Adding PID types at the gateway overcomes the hurdle of updating the client side with the scheme of the new PID type each time when a new PID type is introduced.
+
+We achieve scaling and planning of an NDN network by managing the NDN infrastructure with Kubernetes. Despite lacking a orchestrator like DRIP to demonstrate scaling in or out resources to other cloud providers with TOSCA, we have demonstrated a method for scaling in or out the NDN application. Our method allows to reconfigure an NDN infrastructure 
+by interacting with Kubernetes as the orchestrator. The YAML configuration of Kubernetes can be seen as the TOSCA template description which is processed by Kubernetes, which in turn acts as an orchestrator instead of DRIP. 
+
+TO-DO: extending the second part of the conclusion if needed.
+%We simulated the use of TOSCA with an orchestrator like DRIP by using the YAML configuration of Kuberenetes which acts as a TOSCA template and the processing of this template .  

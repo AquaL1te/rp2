@@ -13,12 +13,14 @@
 \usepackage{booktabs}
 \usepackage{csquotes}
 \usepackage[style=numeric,backend=biber]{biblatex}
+\usepackage[acronym, nonumberlist]{glossaries} %Load glossaries package
 %\usepackage[acronym]{glossaries}
 %\usepackage{url}[hyphens]
 %\usepackage{url}
 %,nomain,nonumberlist
 \addbibresource{references.bib}
 
+\makeglossaries
 % \setcounter{section}{-1}
 
 \usepackage{helvet}
@@ -28,8 +30,6 @@
     breaklines=true,
     postbreak=\mbox{\textcolor{Rhodamine}{$\hookrightarrow$}\space}
 }
-
-%\makeglossaries
 
 \begin{document}
 \begin{titlepage}
@@ -58,7 +58,7 @@ by\\[0.2cm]
 \tableofcontents
 %\clearpage
 
-%\include{Sections/acronyms}
+\include{Sections/acronyms}
 \include{Sections/abstract}
 \include{Sections/introduction}
 \include{Sections/overview}
