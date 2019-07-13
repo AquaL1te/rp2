@@ -22,19 +22,28 @@
 
 SeaDataNet is a distributed marine data infrastructure network for managing the large and diverse data sets collected by the oceanographic fleets and the automatic observation systems. Reliable and fast marine data access is of importance for marine research and required for various studies, which varies from climate change research to off shore engineering. SeaDataNet started the SeaDataCloud project in 2016, aiming at advancing SeaDataNet's services and increasing their usage, adopting cloud and high performance computing technology for better performance \cite{sdc}. SeaDataNet connects together more than a hundred data centres from eight European marine institutes in different geographical domains, aiming at preserving and making reusable marine observations ranging from ocean physics to chemistry and biology.
 
-SeaDataCloud's current infrastructure is a centralized solution, as the current cache is a central catalogue which duplicates the entire data repository. Data consumers use host-to-host-connections to pull data from this cache. This can cause congestion with many data consumers and it lacks distributing load efficiently. SeaDataCloud proposed a model to introduce NDN, as seen in figure \ref{fig:sdc_ndn}. With NDN, data is cached at intermediate routers along the network path which brings the data closer to the consumer. The data hosting organization publishes the object in NDN, where the PID resolver does the translation from PID name to a NDN name (to be used within NDN) and inserts the data in NDN. Their proposed model currently only supports one PID provider also referred to as a PID type. Interoperability between different PID types within NDN has not been realized yet at SeaDataCloud. We get more into detail about PID in section \ref{pid-intr} and NDN in section \ref{introduction-ndn}.
+SeaDataCloud's current infrastructure is a centralized solution, as the current cache is a central catalogue which duplicates the entire data repository. Data consumers use host-to-host-connections to pull data from this cache, which can cause congestion with many data consumers. Their current infrastructure is shown in figure \ref{fig:sdc_cur} and assigns a PID, which can be any type, to each object that is pushed into the cache to uniquely identify an object. Their planned solution for changing their current infrastructure is to use NDN and make object PIDs interoperable within NDN. We will look into making a design to introduce NDN at SeaDataCloud, to change their current centralized host-to-host solution and assure interoperability between different PID types in NDN.
+
+%and it lacks distributing load efficiently. SeaDataCloud proposed a model to introduce NDN, as seen in figure \ref{fig:sdc_ndn}. With NDN, data is cached at intermediate routers along the network path which brings the data closer to the consumer. The data hosting organization publishes the object in NDN, where the PID resolver does the translation from PID name to a NDN name (to be used within NDN) and inserts the data in NDN. Their proposed model currently only supports one PID provider also referred to as a PID type. Interoperability between different PID types within NDN has not been realized yet at SeaDataCloud. We get more into detail about PID in section \ref{pid-intr} and NDN in section \ref{introduction-ndn}.
 
 %After the object has been cached in NDN, the data consumer can then request the object from the NDN network. Their proposed model currently only supports one PID provider also referred to as a PID type. Interoperability between different PID types within NDN has not been realized yet at SeaDataCloud.
 
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.4]{Images/sdcrp2.png}
+%\caption{SeaDataClouds proposed NDN model.}
+%\label{fig:sdc_ndn}
+%\end{figure}
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{Images/sdcrp2.png}
-\caption{SeaDataClouds proposed NDN model.}
-\label{fig:sdc_ndn}
+\includegraphics[scale=0.6]{Images/SDC_current.png}
+\caption{SeaDataClouds current infrastructure.}
+\label{fig:sdc_cur}
 \end{figure}
 
 \subsection{What is a PID?}\label{pid-intr}
-Shortly after the introduction of the WWW, Tim Berners Lee (its creator) proposed to the IETF to use the Uniform Resource Identifier (URI) as the naming scheme for identifying contents on the web. This proposal got rejected by the IETF, due to the fact that it does not allow users of the web to change the URI of the web contents when moving the web contents to another location. This lead to the use of Uniform Resource Locators (URLs) as the naming scheme to identify web content. 
+Shortly after the introduction of the WWW, Tim Berners Lee (its creator) proposed to the IETF to use the URI as the naming scheme for identifying contents on the web. This proposal got rejected by the IETF, due to the fact that it does not allow users of the web to change the URI of the web contents when moving the web contents to another location. This lead to the use of URLs as the naming scheme to identify web content. 
 %In this paper, the term Web content refers to a digital object.
  
 The use of URLs was no issue at the early stages of the web, but several studies have found out that approximately 50\% of the URLs in scholarly publications fail to retrieve the digital object after a period of seven to ten years, where users of the web began to experience the problem of a broken link, or the so called "link rot" problem \cite{rot-link1, rot-link2}. This is a situation where a user fails to retrieve the web content by its URL, due to the fact that the location of the web content has been changed \cite{icn-bd, ark-id}. 
@@ -80,8 +89,19 @@ Olschanowsky et. al. researched translating climate modeling scheme filenames, u
 naming schema. The researchers designed a NDN name translator to support the data management needs of CMMAP. The NDN name translator incorporates a naming schema that is designed to be compatible with existing climate modeling schemes, like CMIP5, while allowing for some flexibility for project-specific requirements. They explain that NDN names for climate data should be both expressive and human readable. The advantages of long expressive names versus short easy to remember names have to be balanced.
 The researcher state that every data provider should publish a data prefix which acts as a globally
 routable prefix within NDN covering all of the data made available by the provider. This complies with Mousa, who stated that NDN naming of different PID providers must be taken into account. The researchers consulted with CMMAP climate scientists and confirmed that these naming rules are acceptable for their datasets and are appropriate for global distribution. 
-However, the translation is not as easy as taking the filename only and translating it into a NDN name. To construct a usable NDN name to uniquely identify data of a specific model, the filename to NDN translator has to parse file metadata or even glean in the data itself to mine for missing name components. 
-For example, the following name in CMMAP \texttt{"spcesm-ctrl.pop.h.1891-01.nc"} translates into \texttt{"/coupled/control/CMMAP/spcesm-ctrl/pop/1M/1891-01/"}. In this example it is shown that after the prefix, which identifies the provider \texttt{"/coupled/control/CMMAP/"}, the NDN translated name contains additional information next to the filename, which is parsed from metadata or information that resides in the data itself \cite{ndn-clim}.
+However, the translation is not as easy as taking the filename only and translating it into a NDN name. To construct appropriate NDN names to uniquely identify data of a specific model, the filename to NDN translator needs information gleaned from the filesystem path, filename and metadata mined from the data itself. This information is processed by a filename to NDN name mapping schema to be used for CMMAP filenames. Therefore, some intelligence is expected in their translators.
+Figure \ref{fig:cmmap_ndnn} shows the translation of a CMMAP name to an NDN name. . In this example it is shown that after the prefix, which identifies the provider \url{"/coupled/control/CMMAP/"}, the NDN translated name contains additional information next to the input filename \cite{ndn-clim}.
+%, which is parsed from metadata or information that resides in the data itself \cite{ndn-clim}. 
+They further state that since NDN naming is flexible and virtually any appropriate
+translation schema can be plugged into, it is possible to support many naming schemes as long as the 
+name can be broken down in hierarchical components.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{Images/cmip2ndn.png}
+\caption{CMMAP to NDN name translator.}
+\label{fig:cmmap_ndnn}
+\end{figure}
 
 % TO-DO
 %The research done by Fan et. al. utilizes a catalog which 
@@ -120,13 +140,15 @@ With the use case in mind as described in section \ref{introduction-background} 
 	\item How to make the PID and NDN namespace interoperable?
 \end{itemize}
 
-As SeaDataCloud's proposed solution only supports one PID type at the moment, we will look into supporting different PID types to find a feasible solution to implement future PID types easily. This will be answered with the following sub-questions.
+SeaDataCloud's planned solution needs to support multiple PID types, as PIDs that get assigned to objects in their infrastructure can be of any type, we will look into supporting different PID types to find a feasible solution to implement future PID types easily. This will be answered with the following sub-questions.
 \begin{itemize}
     \item[--] How to support different PID types?
     \item[--] How to incorporate extensibility for future PID schemes?
 \end{itemize}
 
-As SeaDataCloud's current infrastructure is a centralized solution and lacks distributing load efficiently and reliably, which could cause a lot of congestion with many users. Their proposed model incorporates NDN to overcome the issues of traditional host-to-host oriented techniques. Therefore, we will research the planning of an NDN network with scalability in mind. To achieve this, the following research question needs to be answered.   
+As SeaDataCloud's current infrastructure is a centralized host-to-host solution 
+%and lacks distributing load efficiently and reliably, 
+which could cause a lot of congestion with many users, their planned solution incorporates NDN to overcome the issues of traditional host-to-host oriented techniques. Therefore, we will research the planning of an NDN network with scalability in mind. To achieve this, the following research question needs to be answered.   
 \begin{itemize}
     \item How to plan and manage an NDN network's life cycle with scalability in mind?
 \end{itemize}
@@ -139,15 +161,15 @@ To answer this research question we need to analyze the known scalability proble
 \end{itemize}
 
 \subsection{Scope}
+\label{introduction-scope}
 % What will we do and what will we skip? Based on what's already done in related work and our research question
 % The use case that SeaDataCloud offers is suitable to further research and improve interoperability of different PID types in NDN and planning and scaling such an NDN network. In order to accommodate multiple data producers, for which each has their own PID scheme, a custom tailored mapping needs to be made which will be derived and from the related work done earlier and improve our model by tackling the issues the researches came across. Support for future PID types with different naming schemes should be easily extensible, therefore we will also look into a solution which makes this possible. 
 
 % This also requires to look into the design patterns of such a deployment where scalability and automated provisioning are key requirements. For this, we will look into different solutions like Kubernetes and TOSCA for managing an NDN network in a Software Defined Networking (SDN) fashion.
 
-Based on related work (section \ref{introduction-related-work}) and the research question (\ref{introduction-research-question} we defined the following scope for our research. We will develop a method to make the PID types URN, Handle and DOI interoperable with the NDN namespace. This is done to demonstrate that interoperability of different PID types is possible within NDN. The reason we do not cover more PID types in our methodology is because with the aforementioned PID types we can already prove that PID interoperability is possible. There are more PID types in existence than the ones mentioned in section \ref{introduction-pid}. We also aim to define a solution where future PID types can be added easily.
-Therefore, the interoperability goals are to demonstrate that different PID types can be used within NDN. 
+Based on related work (section \ref{introduction-related-work}) and the research question (\ref{introduction-research-question} we defined the following scope for our research. We will develop a method to make the PID types URN, Handle and DOI interoperable with the NDN namespace. This will be done to demonstrate that interoperability of different PID types is possible within NDN. The reason we do not cover more PID types in our methodology is because with the aforementioned PID types we can already prove that PID interoperability is possible. There are more PID types in existence than the ones mentioned in section \ref{introduction-pid}. We also aim to define a solution where future PID types can be added easily. Therefore, the interoperability goals are to demonstrate that different PID types can be used within NDN. 
 
-The planning of the NDN network has the following goals. Based on known performance limitations (section \ref{introduction-related-work-ndn}) and the SeaDataCloud use case (section \ref{introduction-background}) we will develop a method for planning and deployment. This includes a proof of concept where, based on NDN's adaptability, the network can be adjust for scale in both performance but also in terms of manageability.
+The planning of the NDN network has the following goals. Based on known performance limitations (section \ref{introduction-related-work-ndn}) and the SeaDataCloud use case (section \ref{introduction-background}) we will develop a method for planning and deployment. This includes a proof of concept where, based on NDN's adaptability, the network can be adjust for scale in both performance but also in terms of manageability. The proof of concept will be limited to existing software solutions.
 
 \subsection{Report structure}
 To-do after finishing our paper.

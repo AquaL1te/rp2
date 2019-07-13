@@ -6,10 +6,14 @@
 %Metadata, rules, web resolver link or not etc. all depending on PID and cloud proivider.
 
 %Discussion or future work.
-For our PoC we used \texttt{ndnputchunks} to insert an object into NDN. However, \texttt{ndnputchunk}s does not serve a file, but works with standard input stream. Data is cached in-memory and takes up to three times the size of the object for encoding \cite{ndnput-mem}. For using a persistent file cache we already compiled the base image of our PoC with repo-ng\footnote{https://github.com/named-data/repo-ng} as that makes use
+For our proof of concept we used \texttt{ndnputchunks} to insert an object into NDN. However, \texttt{ndnputchunks} does not serve a file, but works with standard input stream. Data is cached in-memory and takes up to three times the size of the object for encoding \cite{ndnput-mem}. For using a persistent file cache we already compiled the base image of our proof of concept with repo-ng\footnote{https://github.com/named-data/repo-ng} as that utilizes
 %is part 
-of the NDN-CXX application we used within our PoC. Repo-ng is an open source project and is used to set up a data repository for a persistent file cache.
+the NDN-CXX application we already use. Repo-ng is an open source project and is used to set up a data repository for a persistent file cache.
 
-For supporting multiple PID types, we have only implemented three PID types in our PoC, as this already proves that supporting multiple PID types is possible. Adding more PID types to our PoC, such as the ones described in Karakannas' research \cite{icn-bd} is possible but we see this more as work for an implementation.
+For supporting multiple PID types, we have only implemented three PID types in our proof of concept, as this already proves that supporting multiple PID types is possible. Adding more PID types to our proof of concept, such as the ones described in Karakannas' research \cite{icn-bd} is possible but we see this more as work for an implementation.
+
+In our proof of concept we created two scripts for the client side and two scripts for the gateway to demonstrate our design. Transparency to the user, by not requiring further user input and be aware of an NDN network by only entering the PID, is not yet implemented but can be achieved. In section \ref{pid-poc} we describe how this can be achieved by combining the scripts that we have created.
+
 
 TO-DO: Mention TOSCA difficulties.
+% high-availability kubernetes + persistent volumes + ndn cache
