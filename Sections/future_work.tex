@@ -7,30 +7,23 @@
 
 The TOSCA blueprints we made are conceptual at the moment and as such our proof of concept lacks a TOSCA orchestrator such as DRIP as discussed in section \ref{overview-tosca}. In our case, we use the YAML configuration of Kubernetes to act as the TOSCA template description while Kubernetes acts as the orchestrator. This means that in our proof of concept the deployment of the VM and Kubernetes happens manually, as the orchestrators mentioned in section \ref{overview-tosca} are still in a prototype phase. 
 Extending Kubernetes with intelligence is required to automatically deploy NDN routers geographically, which is achieved by using containers.
-%is an option for automatic deployment of the VM and Kubernertes.
-It is also worth looking more into well defining TOSCA templates and using the DRIP orchestrator to demonstrate scaling in or out resources to other cloud providers, as we only demonstrated scaling in our out the NDN application with Kubernetes. 
+
+It is also worth researching how to well define TOSCA templates and using the DRIP orchestrator to demonstrate scaling in or out resources to other cloud providers, as we only demonstrated scaling in our out the NDN application with Kubernetes. 
 %Explore performance bottlenecks (benchmarking)" 
 
-%In our proof of concept we deploy the VM and Kubernertes manually, as the orchestrators mentioned in section \ref{overview-tosca} are still in a prototype phase. 
+We advice to do more research in the field of benchmarking NDN. The results we discussed in section \ref{disc} are preliminary. There are different kinds of parameters that can be configured to optimize performance. Such as exploring different MTU sizes (this can be configured when creating a face, as well as with the \texttt{ndnputchunks} tool) and configuring congestion treshold and pipeline types (for example fixed, Cubic or AIMD for configuring window sizes). Where the latter can also be configured when using the \texttt{ndnputchunks} tool. Furthermore, the NDN network can be configured to use TCP or UDP, which can also be configured when creating a face. We recommend running different tests with the aforementioned parameters with multiple consumers, to find out to what extent congestion occurs.
+The parameters can also be combined with the most optimal NDN caching mechanism and the most optimal ordering method \cite{koulouzis2018information} to run benchmarks.
 
-There is still some research to do in the field of benchmarking NDN. A lot of parameters can be configured to look for the most optimal configuration for NDN networking. Such as exploring different MTU sizes (this can be configured when creating a face, as well as with the \texttt{ndnputchunks} tool) and configuring congestion treshold and pipeline type (for example fixed, cubic or aimd for configuring window size). Where the latter can also be configured when using the \texttt{ndnputchunks} tool. Furthermore, the NDN network can be configured to use TCP or UDP, which can also configured when creating a face. We recommend running different tests with the aforementioned test with multiple consumers, to find out to what extent congestion occurs.
+% This part needs some tweaking maybe (already tweaked it a bit)
+For benchmarking, the tool ndn-traffic-generator\footnote{https://github.com/named-data/ndn-traffic-generator} can be used to generate random interest and data traffic in an NDN network. Although this tool only allows a fixed pipeline size (\texttt{X} amount of packets per second) and does not implement congestion control. Thus it is not very useful when comparing against TCP/IP \cite{ndnput-mem}. The tool \texttt{ndncatchunks} that we used in our proof of concept for requesting objects from NDN, is a more realistic scenario than generating random traffic as this does incorporates congestion control, which makes it more useful for comparing against TCP/IP.
 
-%and running different tests with multiple consumers. 
-
-%The most optimal performance of different NDN strategies, such as decision, cache replacement and forward strategies have already been looked into by Mousa \
-The most optimal NDN caching mechanisms, such as cache decision-, cache replacement- and cache forward strategies have already been looked into by Mousa \cite{ndn-app-aware} and Karakannas \cite{icn-bd}. The most optimal ordering method to be used with the caching mechanisms has also been looked into by Rahaf and Koulozis et al. \cite{koulouzis2018information}, which can be combined with the aforementioned parameters to run performance tests.
-For benchmarking, the tool ndn-traffic-generator\footnote{https://github.com/named-data/ndn-traffic-generator} can be used to generate random Interest and Data traffic in an NDN network. Although this tool only allows a fixed pipeline size (\texttt{X} amount of packets per second) and does not implement congestion control. Thus it is not very useful when comparing against TCP \cite{ndnput-mem}. The tool \texttt{ndncatchunks} that we used in our proof of concept for requesting objects in NDN, is a more natural scenario than generating random traffic as this does incorporates congestion control, which makes it more useful for comparing against TCP.
-
-As for PID interoperability within the NDN namespace, we recommend incorporating the PID to NDN translation into NDN software natively which makes it easier for having NDN support PIDs out-of-the box. It is also worth mentioning that the results of our proof of concept are preliminary, as not only NDN is still in experimental phase but also the orchestrators that fit in our use case like DRIP are still in a prototype phase.
-%as it worth mentioning that NDN is still in experimental phase. etc.
+As for PID interoperability within the NDN namespace, we recommend incorporating the PID to NDN translation into NDN software natively which makes it easier for having NDN support PIDs out-of-the box. It is also worth mentioning that the results of our proof of concept are preliminary, as not only NDN is still in experimental phase but also the mentioned orchestrators in section \ref{planning-ndn}.
  
- 
-Testing routing protocols for NDN is also an important aspect, as in our proof of concept we have to manually configure all the routes. Lixia Zhang et. al. designed and performed feasibility assessment of an extension of OSPF for NDN that they call "OSPF-N". OSPF-N is a routing protocol based on the existing OSPF protocol for IP networks. OSPF-N uses new types of Opaque LSA's to carry NDN routing information. By using the OSPF-N configuration manager at each NDN node, it configures links to other NDN nodes, name prefixes of the content store, and the maximum number of hops to be calculated for each name prefix in order to support multipath routing \cite{ndn-ospfn}.
- 
-%Testing routing protocols such as OSPF-N is also important, as in our proof of concept we manually configure all the routes. OSPF-N is a routing protocol based on the existing OSPF protocol for IP networks. With OSPF-N 
-%Extent Kubernetes with intelligence X
-%Where to deploy NDN routers (containers)? X
-%Incorporate the PID -> NDN translation into NDN software natively X
+Testing routing protocols for NDN is also an important aspect, as in our proof of concept we have to manually configure all the routes. Lan Wang et. al. \cite{ndn-ospfn1} designed and performed a feasibility assessment in 2011 of an extension of OSPF for NDN that they call "OSPF-N". OSPF-N is a routing protocol based on the existing OSPF protocol that operates on the network layer for IP networks. OSPF-N uses new types of Opaque LSA's to carry NDN routing information. By using the OSPF-N configuration manager at each NDN node, it configures links to other NDN nodes, name prefixes of the content store, and the maximum number of hops to be calculated for each name prefix in order to support multipath routing \cite{ndn-ospfn2}. 
+NLSR is also a routing protocol designed for NDN, in addition to OSPF-N. 
+The initial design for NLSR was developed in 2013. The protocol operates at the application layer similar to existing IP routing protocols such as RIP and BGP. This protocol calculates the routing table using link-state or hyperbolic routing. Furthermore, it produces multiple faces for each reachable name prefix in a single authoritative domain \cite{nlsr}. 
+
+
 
 
 
