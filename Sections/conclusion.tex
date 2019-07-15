@@ -1,18 +1,17 @@
 \section{Conclusion}\label{conc}
-This research investigated sharing digital objects using NDN, where we achieve PID interoperability of different PID types within the NDN namespace and planning and scaling of such an NDN network. 
-
+This research investigated sharing digital objects using NDN, where we achieved PID interoperability of different PID types with the NDN namespace and planning and scaling of such an NDN network. 
 Our findings give insight for distributed infrastructures that manage large and diverse sets of data like SeaDataCloud and CS3. We explain why NDN networking should be chosen for retrieving digital objects instead of host-to-host communications.
 
-The implementation of our design in a proof of concept shows that our principles regarding PID interoperability within the NDN namespace can be adhered. The translation of PIDs to an NDN name can be made transparent to the user, as the gateway is responsible for the translation and the client takes care of object retrieval either from the PID provider or from the NDN network. Only a PID should be needed from the user input. Translation is achieved by first recognizing the PID type based on pattern matching and then hierarchically divide the PID to an NDN name. 
+The implementation of our design in a proof of concept shows that our principles regarding PID interoperability with the NDN namespace can be adhered. The translation of PIDs to an NDN name can be made transparent to the user, as the gateway is responsible for the translation and the client takes care of object retrieval either from the PID provider or from the NDN network. Only a PID should be needed from the user input. Translation is achieved by first recognizing the PID type based on pattern matching and then hierarchically divide the PID to an NDN name. 
 
-Our solution is designed to be extensible, new PID schemes can be added at the gateway. Therefore, only the gateway needs to update its PID support. The client is agnostic towards PID types, 
+Our solution is designed to be extensible, new PID schemas can be added at the gateway. Therefore, only the gateway needs to update its PID support. The client is agnostic towards PID types, 
 it is up to the gateway to verify the types 
 and send an appropriate response. This elevates the burden of updating client software.
 
-Support for multiple PID types is also realized by adding the scheme of the PID types at the gateway, which makes it also easily extensible to support future PID types. Adding PID types at the gateway overcomes the hurdle of updating the client side with the scheme of the new PID type each time when a new PID type is introduced.
+Support for multiple PID types is also realized by adding the schema of the PID types at the gateway, which makes it also easily extensible to support future PID types. Adding PID types at the gateway overcomes the hurdle of updating the client side with the schema of the new PID type each time when a new PID type is introduced.
 
 We achieved flexible scaling and planning of an NDN network by managing the NDN infrastructure with Kubernetes. We have demonstrated a method for scaling in or out the NDN application, despite lacking a orchestrator like DRIP to demonstrate scaling in or out resources to other cloud providers with TOSCA. Our method allows to reconfigure an NDN infrastructure 
 by interacting with Kubernetes as the orchestrator. The YAML configuration of Kubernetes can be seen as the TOSCA template description which is processed by Kubernetes, which in turn acts as an orchestrator instead of DRIP.
 
-TO-DO: extending the second part of the conclusion if needed.
-%We simulated the use of TOSCA with an orchestrator like DRIP by using the YAML configuration of Kuberenetes which acts as a TOSCA template and the processing of this template .  
+%TO-DO: extending the second part of the conclusion if needed.
+%We simulated the use of TOSCA with an orchestrator like DRIP by using the YAML configuration of Kuberenetes which acts as a TOSCA template and the processing of this template
