@@ -1,10 +1,13 @@
 \begin{abstract}
 %\todo{This section needs to be reviewed, also the sources}
+Publishing and sharing digital objects is an important service for data infrastructures like SeaDataCloud and CS3.
 SeaDataCloud is a distributed infrastructure to manage large and diverse sets of data about seas and oceans. This Pan-European network offers data access to support scientific workflows which varies from climate change prediction to offshore engineering \cite{sdc}.
+Different independent organizations push data into this infrastructure which are then automatically and manually curated to ensure correct data formats. A PID is then assigned when it’s stored in the catalog. This PID ensures that the data can be identified, independent of its location in the infrastructure \cite{icn-survey, icn-bd}. 
+CS3 is another case of a data infrastructure, which includes around hundred institutions and companies from around the world and this number keeps growing.
+Their most important technical challenge is incorporating introperability of the different naming schemas being used within
+CS3.
 
-Different independent organizations push data into this infrastructure which are then automatically and manually curated to ensure correct data formats. A PID is then assigned when it’s stored in the catalog. This PID ensures that the data can be identified, independent of its location in the infrastructure \cite{icn-survey, icn-bd}.
-
-Data consumers pull data from this catalog by the means of host-to-host connections (IP), where every data request from the consumer are answered with a data transfer from the source (the producer). This approach can potentially cause congestion and delays with many data consumers. NDN is a data centric approach where unique data, once requested, is stored on intermediate hops in the network. Consecutive requests for that unique data object are then made available by these intermediate hops (caching). This approach distributes traffic load more efficient and reliable compared to host-to-host connection oriented techniques \cite{ndn-ccr}.
+Data consumers pull data from these data infrastructures by the means of host-to-host connections (IP), where every data request from the consumer are answered with a data transfer from the source (the producer). This approach can potentially cause congestion and delays with many data consumers. NDN is a data centric approach where unique data, once requested, is stored on intermediate hops in the network. Consecutive requests for that unique data object are then made available by these intermediate hops (caching). This approach distributes traffic load more efficient and reliable compared to host-to-host connection oriented techniques \cite{ndn-ccr}.
 
 This research will focus on how to make the NDN naming schema interoperable and scalable with multiple PID providers such that the workflows at e.g. SeaDataCloud can be optimized \cite{icn-resteam}.
 \end{abstract}
