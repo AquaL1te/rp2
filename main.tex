@@ -4,7 +4,6 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{url}[hyphens]
-
 %hyperref causes the Illegal parameter error
 \usepackage[breaklinks]{hyperref}
 \usepackage[dvipsnames,todonotes]{xcolor}
@@ -42,13 +41,28 @@
 \textsc{\Large Research Project II}\\[0.5cm] 
 
 \HRule \\[0.4cm]
-{\huge \bfseries Sharing digital objects using NDN: PID interoperability, planning and scaling}\\[0.4cm]
+%{\huge \bfseries Sharing digital objects using NDN: PID interoperability, planning and scaling}\\[0.4cm]
+{\huge \bfseries Planning and Scaling a Named Data Network with Persistent Identifier Interoperability}\\[0.4cm]
 \HRule \\[0.5cm]
  
 by\\[0.2cm]
 \textsc{\Large Kees de Jong \& Anas Younis}\\[0.2cm]
 
 {\Large \today}\\[1cm]
+
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Supervisor:} \\
+Dr. Zhiming Zhao
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright} \large
+\emph{Assessor:} \\
+Prof. dr. ir. Cees de Laat\\
+\end{flushright}
+\end{minipage}\\[2cm]
 
 \vfill
 
@@ -58,15 +72,16 @@ by\\[0.2cm]
 \tableofcontents
 %\clearpage
 
-\include{Sections/acronyms}
 \include{Sections/abstract}
 \include{Sections/introduction}
+\include{Sections/related-work}
 \include{Sections/overview}
 \include{Sections/interoperability}
 \include{Sections/planning-scaling}
 \include{Sections/discussion}
 \include{Sections/conclusion}
 \include{Sections/future_work}
+\include{Sections/acronyms}
 
 \printbibliography
 \end{document}
