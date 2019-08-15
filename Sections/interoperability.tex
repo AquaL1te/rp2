@@ -62,7 +62,7 @@ The first responsibility is translating the \gls{pid} it receives from the clien
 The patterns of most standardized \gls{pid} type schemas are maintained in the ePIC \gls{dtr} \cite{dtr} and can be used for implementation in the gateway we propose. 
 
 %Naming:
-Furthermore, the second responsibility of the gateway is to check if the object is already published in NDN.
+Furthermore, the second responsibility of the gateway is to check if the object is already published in \gls{ndn}.
 %This can be done with a ping to the object with \texttt{ndnping}, part of the \texttt{ndn-tools} software \cite{ndn-tools} used in our proof of concept. To use this, a \texttt{ndnpingserver} has to be setup for the objects with the \gls{ndn} testing software we have utilized. The presence of the object can also be detected with \texttt{ndncatchunks} by catching the error exception, which is thrown if the object is not published by \texttt{ndnputchunks}.
 If the object is available in \gls{ndn}, the gateway sends the translated \gls{ndn} name back to the client. The client then retrieves the object from \gls{ndn}. This is shown in figure \ref{fig:seq_ndn}, where the Handle \gls{pid} type is used as an example. If the object is not available in \gls{ndn}, the gateway sends back the \gls{pid} link to the client and caches the object in \gls{ndn}. 
 %The client then retrieves the object by its \gls{pid} link from the \gls{pid} server as shown in figure \ref{fig:seq_pid}. 
@@ -180,7 +180,7 @@ Translation is achieved by first recognizing the \gls{pid} type based on pattern
 %The patterns of most standardized \gls{pid} type schemas are maintained in the ePIC \gls{dtr} \cite{dtr} and can be used for implementation in the gateway we propose. 
 
 %Naming:
-%Furthermore, the second responsibility of the gateway is to check if the object is already published in NDN.
+%Furthermore, the second responsibility of the gateway is to check if the object is already published in \gls{ndn}.
 %This can be done with a ping to the object with \texttt{ndnping}, part of the \texttt{ndn-tools} software \cite{ndn-tools} used in our proof of concept. To use this, a \texttt{ndnpingserver} has to be setup for the objects with the \gls{ndn} testing software we have utilized. The presence of the object can also be detected with \texttt{ndncatchunks} by catching the error exception, which is thrown if the object is not published by \texttt{ndnputchunks}.
 %If the object is available in \gls{ndn}, the gateway sends the translated \gls{ndn} name back to the client. The client then retrieves the object from \gls{ndn}. This is shown in figure \ref{fig:seq_ndn}, where the Handle \gls{pid} type is used as an example. If the object is not available in \gls{ndn}, the gateway sends back the \gls{pid} link to the client and caches the object in \gls{ndn}. 
 %The client then retrieves the object by its \gls{pid} link from the \gls{pid} server as shown in figure \ref{fig:seq_pid}. 
