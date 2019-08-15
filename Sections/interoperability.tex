@@ -8,7 +8,7 @@
 %-Show our model
 %\subsection{PID interoperability}
 In this section, we will propose a design, which achieves \gls{pid} interoperability with the \gls{ndn} namespace and makes it feasible to add future \gls{pid} types to answer our research question in section \ref{introduction-research-question}. Our design is based on related work done by Karakannas \cite{icn-bd}, by avoiding the \gls{pid} to \gls{ndn} translation on client side \cite{icn-bd}. The pattern matching method was based on related work by Mousa for identifying different \gls{pid} type schemas \cite{ndn-app-aware}. The research done by Olschanowsky et. al. was used for deriving \gls{ndn} names from metadata \cite{ndn-man}.
-We have reimplemented the principles of NaaS4PID in order to demonstrate the \gls{pid} interoperability extensibility feature. We came up with our own solution, as the NaaS4PID was nor available or public to extend it.
+We have reimplemented the principles of \gls{naas4pid} in order to demonstrate the \gls{pid} interoperability extensibility feature. We came up with our own solution, as the \gls{naas4pid} was nor available or public to extend it.
 We combined the aforementioned related work and extended it with an extendable interoperability feature, we attempt to make the translation transparent to the user and support multiple \gls{pid} types. The proposed design for our solution is illustrated in figure \ref{fig:sdc_model}.
 Our design adheres to the following aforementioned principles, which will be discussed in more detail in this section.
  
@@ -119,7 +119,7 @@ There is no address exhaustion problem in \gls{ndn} as the \gls{ndn} namespace i
 
 % merge with results
 \subsection{Results}\label{results-pid}
-The outcome of implementing our design in a proof of concept shows that our principles can be adhered. Since the NaaS4PID solution was not available to extend or improve it, we came up with our own solution and made it publicly available. Making the translation and object retrieval transparent to the user is possible. Users should not have to concern themselves whether to retrieve the object through \gls{ndn} or the \gls{pid} server. This is due to gateway's responsibility for \gls{pid} to \gls{ndn} translation and the object retrieval, which is taken care of by the client. 
+The outcome of implementing our design in a proof of concept shows that our principles can be adhered. Since the \gls{naas4pid} solution was not available to extend or improve it, we came up with our own solution and made it publicly available. Making the translation and object retrieval transparent to the user is possible. Users should not have to concern themselves whether to retrieve the object through \gls{ndn} or the \gls{pid} server. This is due to gateway's responsibility for \gls{pid} to \gls{ndn} translation and the object retrieval, which is taken care of by the client. 
 %This can be achieved by combining the code we used for retrieving the object from either the \gls{pid} server or NDN. 
 Translation is achieved by first recognizing the \gls{pid} type based on pattern matching and then hierarchically divide the \gls{pid} to an \gls{ndn} name. Support for multiple \gls{pid} types is also achieved by adding the schema of the \gls{pid} types at the gateway, which makes it also easily extensible to support future \gls{pid} types. By adding \gls{pid} types at the gateway, we overcome the hurdle of updating the client software with the schema of newly introduced \gls{pid} types each time when a new \gls{pid} type is introduced.
 
