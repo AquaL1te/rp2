@@ -9,10 +9,7 @@
 
 In this section we provide an overview of the technologies used in our methodology in sections \ref{pid-poc} and \ref{planning-ndn}. We will briefly analyze and explain related technologies based on the general problem statement in research clouds from section \ref{introduction-background}. We will compare key properties of these technologies and based on the analysis and the process of elimination we will define the relevant technologies for this research.
 
-\todo{merge and trim with existing text, "what is a pid" can be used as introduction, check gdoc for discussion and remarks}
-% \subsubsection{What is a PID?}
 \label{pid-intr}
-\todo{perhaps this history could be removed? it's not relevant for this research, it's just some history that doesn't answer a research question or comes back, right? but up to you}
 Shortly after the introduction of the \gls{www}, Tim Berners Lee (its creator) proposed to the \gls{ietf} to use the \gls{uri} as the naming schema for identifying contents on the web. This proposal got rejected by the IETF, due to the fact that it does not allow users of the web to change the URI of the web contents when moving the web contents to another location. This lead to the use of URLs (Uniform Resource Locators) as the naming schema to identify web content \cite{icn-bd}. 
 %In this paper, the term Web content refers to a digital object.
  
@@ -70,7 +67,6 @@ The \texttt{<doi name syntax>} part identifies an object within the DOI naming a
 Furthermore, metadata is available in many formats in the DOI system. Including BibTeX, Citeproc-JSON, \gls{rdf} as well as XML and JSON \cite{doi-met}. It depends on the PID provider which format to use.
 
 \subsection{NDN}
-\todo{trim and merge text below, leave out duplication}
 % \subsubsection{Data distribution technologies}
 \label{introduction-ndn}
 When the internet was conceived it was designed for host-to-host communication. This means that in order to retrieve data, a host needs to retrieve the data from an \gls{ip} address. Nowadays the internet is increasingly data-oriented rather than host-oriented. For example, in 2018 15\% of the worldwide average bandwidth use was consumed by Netflix, with regional peaks often reaching 40\% \cite{introduction-netflix}. When many data consumers request the same video (or content in general), congestion can occur, degrading the user experience. Data locality sits on top of that problem, since data needs to cross distance as well, resulting in latency. Several technologies and methods have been developed to assist in efficient data distribution to improve performance. A few notable examples are Content Delivery Networks (CDNs), Information Centric Networks (ICNs) and BitTorrent.
