@@ -1,9 +1,9 @@
-\section{Discussion}\label{disc}
+\section{Discussion and experimental results}\label{disc}
 %What 'advice' to give to the reader? Discuss difficulties (e.g. tosca) and such.
 
 % include preliminary performance measurements, emphasize that it's outside the scope of our research, no real conclusions should be made, just observations, this needs to be made very clear
 
-%Metadata, rules, web resolver link or not etc. all depending on PID and cloud proivider.
+%Metadata, rules, web resolver link or not etc. all depending on PID and cloud provider.
 
 
 %%% ZHAO feedback
@@ -14,9 +14,46 @@
     %   - novelty (quality of being new and original)
     %   - weakness
 
+% what is the value of this research?
+% distribution of data
+% deployment of ndn network by using cloud
+% request pids but actually query the ndn network
+
+% weaknesses
+% only 3 pid types in poc
+% not implemented full tosca deployment
+% more detailed planning if more data is fed to planning method
+
 In this section we will discuss our proposed solutions that we explored in order to answer the research questions. Furthermore, we will discuss some preliminary NDN performance of our proof of concept in section \ref{discussion-performance}.
 
-As highlighted in section \ref{introduction-background}, in big science there is a trend of an increase in data production. Where in e.g. research clouds different PIDs are used to uniquely identify data. Furthermore, not only is there a trend of more data production, but also more data consumption, which called for a scalable and manageable data distribution solution. These two problem statements have been addressed in our research. The first problem statement has been addressed in section \ref{pid-poc}, where we explored the possibilities of making the PID and NDN namespaces interoperable. Where the focus was on developing an uncomplicated extendable solution for new PID schemes. \todo{@anas, je zei dat dit soms niet werkte, punt voor discussie}Our solution succeeded by making use of regular expressions to match with a certain PID type and then call the associated function in order to do the translation to an NDN name. Furthermore, this solution was integrated into our NDN proof of concept. The second problem statement has been addressed in section \ref{planning-ndn}, where NDN was identified as a potential solution for the data distribution and network load problem. Therefore, a method of planning and deploying such a network was explored in detail and tested. It was concluded that a scalable and manageable data distribution network can be realized by using a VNF-style of an NDN deployment. Of which the life cycle can be managed by the use of TOSCA templates. However, a full TOSCA orchestrated deployment couldn't be demonstrated. This was due to the fact that TOSCA orchestrators are still in development. However, Kubernetes was used as a substitution to demonstrate the deployment level on a higher level in the deployment chain. In practice, Kubernetes would be deployed by a TOSCA orchestrator as well. Compared to traditional network management, VNF provides more flexibility, by the use of a centrally control the virtual NDN functions in the network. If the behavior of the users change and thus the stress on the network, our solution will be able to adjust the network without adding extra complexities.
+% As highlighted in section \ref{introduction-background}, in big science there is a trend of an increase in data production. Where in e.g. research clouds different PIDs are used to uniquely identify data. Furthermore, not only is there a trend of more data production, but also more data consumption, which called for a scalable and manageable data distribution solution. 
+
+The potential scaling problems at large research clouds could benefit from our method of deployment. As demonstrated in section \ref{planning-deploying}, we have allowed the ability to flexibly scale a distribution network. Which, by the use of a standardized description such as TOSCA, could be deployed in different cloud providers without alteration. This flexibility allows the data distribution network to scale easily and make management uncomplicated. NDN requires a different namespace format than PIDs, this is due to the incompatible nature of these namespaces. Thus a translation was needed from the PID to the NDN namespace, this solution was demonstrated in section \ref{pid-poc}, where we explored the possibilities of making the PID and NDN namespaces interoperable. Therefore, the focus was on developing an extendable solution for new PID schemas. Our solution succeeded by making use of regular expressions to match with a certain PID type, and then call the associated function in order to do the translation to an NDN name. Furthermore, this solution was integrated into our NDN proof of concept. To cache an object in our NDN proof of concept, the user is required to first request the object from the PID server. The object can then be requested in NDN afterwards. Therefore, providing transparency for the user by not requiring any further user input, has not been implemented but can be achieved as described in section \ref{results-pid}. In a previous study, user input was required after translation, which is also the case in our current proof of concept. In section \ref{pid-poc} we describe how transparency for a user can be achieved. This is accomplished due to the gateway’s responsibility for PID to NDN translation and the object retrieval which is taken care of by the client. Our solutions are made freely available under the General Public License (GPLv3) license\footnote{\url{https://github.com/AquaL1te/rp2}}.
+
+An alternative less complicated design is also possible, where the client does not have to support NDN. This is accomplished by making the gateway talk NDN to the NDN network and PID (over TCP/IP) to the client. A client that wants to retrieve a object, uses this gateway as their resolver. The gateway retrieves the object from NDN (or from the PID server if it is not already in NDN) and sends this back to the client through TCP/IP. However, the gateway needs to cache the object before sending it to the client. This design does not require the client to support NDN, as it can retrieve objects through the gateway with regular web browsers, which communicate with the gateway over HTTP. (For each PID type one gateway? So you only have to add another gateway when a new PID type is introduced?)
+
+% You can explain that the NDN provides different opportunities for data infrastructures: i) as internal data-sharing platform per infrastructure, ii) as a third party data-sharing platform, one can deploy and operate for multiple infrastructure. The business model is not the key focus of the paper; but it provides technical possibility to make those servies.
+
+% Focus on the needs and business scenarios where we need scaling, and analyze how you did can enable those scaling. Other parts will have to be left as future work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%This is due to gateway’s responsibility for PID to NDN translation and the object retrieval, which is taken care of by the client.
+%combining the scripts that we have created by adding a conditional statement. This statements checks whether an object is already published in NDN.
+
+% The second problem statement has been addressed in section \ref{planning-ndn}, where NDN was identified as a potential solution for the data distribution and network load problem. Therefore, a method of planning and deploying such a network was explored in detail and tested. It was concluded that a scalable and manageable data distribution network can be realized by using a NVF-style of an NDN deployment. Of which the life cycle can be managed by the use of TOSCA templates. However, a full TOSCA orchestrated deployment could not be demonstrated. This was due to the fact that TOSCA orchestrators are still in development. However, Kubernetes was used as a substitution to demonstrate the deployment level on a higher level in the deployment chain. In practice, Kubernetes would be deployed by a TOSCA orchestrator as well. Compared to traditional network management, NVF provides more flexibility, by the use of a centrally control the virtual NDN functions in the network. If the behavior of the users change and thus the stress on the network, our solution will be able to adjust the network without adding extra complexities.
 
 
 
@@ -24,8 +61,6 @@ As highlighted in section \ref{introduction-background}, in big science there is
 
 %Discussion or future work.
 % For our proof of concept we created two scripts for the client side and two scripts for the gateway to demonstrate our design. The gateway and client are conceptually part of the NDN network we have setup with Kubernetes and can be scaled in or out. The responsibility of the scripts on the client side is to retrieve a requested object either from the PID server or from NDN. The scripts that are implemented in the gateway send either the PID link or the name in NDN to the client for retrieval of the requested object after translation. This depends on the object being published in NDN or not.
-
-To cache an object in NDN in our proof of concept, the user is required to first request the object from the PID server. The object can be requested in NDN afterwards. Therefore, transparency for the user by not requiring any further user input, has not been implemented but can be achieved. In a previous study, user input was required after translation, which is also the case in our current proof of concept. In section \ref{pid-poc} we describe how transparency can be achieved by combining the scripts that we have created by adding a conditional statement. This statements checks whether an object is already published in NDN.
 
 %Usually, NDN operates with in-network caching. However, we used \texttt{ndnputchunks} to cache objects in NDN in our proof of concept, which does not serve a file but works with a standard input stream. Data is cached in-memory and takes up to three times the size of the object for encoding \cite{ndnput-mem}. For using a persistent file cache we already compiled the base image of our proof of concept with repo-ng\footnote{https://github.com/named-data/repo-ng} as that utilizes
 %is part 
@@ -44,12 +79,11 @@ To cache an object in NDN in our proof of concept, the user is required to first
 
 \subsection{Preliminary performance measurements}
 \label{discussion-performance}
-In this section we will briefly discuss the preliminary performance of our NDN with PID interoperability proof of concept. The results gathered were merely based on best-effort test-scenarios and are inconclusive. Therefore, further and more detailed research is required, which we will discuss in more detail in future work (section \ref{fut}).
+In this section we will briefly discuss the preliminary performance of our NDN with PID interoperability proof of concept. The results gathered were merely based on best-effort test scenarios and are inconclusive. Therefore, further and more detailed research is required, which we will discuss in more detail in future work (section \ref{fut}). We did not tweak the \gls{mtu} values and kept the TCP parameters to their defaults, such as the default Linux TCP congestion algorithm; Cubic. For the TCP/IP benchmarks we use the the \texttt{urllib.request} Python module, which uses the HTTP 1.1 protocol over TCP \cite{urllib}.The same policy was applied to the NDN performance tests. We used the default MTU setting (4400) and did not tweak any of the parameters, which are highlighted in section \ref{fut}. The underlying technology is still IP in NDN. However, NDN uses hop-by-hop fragmentation. This technology enables  fragmentation at each hop if needed. Which means that the whole network no longer
+needs to limit its MTU size to the smallest denominator \cite{ndn-mtu}.
 % We want to highlight that the results we present in figure \ref{fig:perftest-1} and \ref{fig:perftest-2} are preliminary. A range of parameters can be used to optimize NDN network performance.
-
-The preliminary performance results of our PID server and the NDN network are illustrated in figure \ref{fig:perftest-1} and \ref{fig:perftest-2}. 
-%To demonstrate the performance of our proof of concept. 
-We ran the performance tests within our proof of concept using a 10MB and 100MB data object. We can observe that NDN over UDP outperforms the TCP/IP connection used for retrieving data objects from the Handle PID server that we setup. In turn, NDN over TCP outperforms NDN over UDP. This result correlates with the research done by Lim et al., as discussed in section \ref{introduction-related-work-ndn}. % Their research concludes that NDN provided performance improvements compared to classical climate data delivery techniques based on TCP/IP. In addition to this, NDN over TCP demonstrated a more reliable and faster performance due to the allowance of larger dynamic window sizes and congestion control.
+The architecture used in our experiments is as follows. The NDN consumer and router container reside on 'nimes', while the NDN producer and router reside on 'mulhouse'. Furthermore, they are connected via a private 1Gbps Ethernet connection.
+The preliminary performance results of our Handle PID server and the NDN are illustrated in boxplots (figure \ref{fig:perftest-1}, \ref{fig:perftest-2}, \ref{fig:perftest-3}, \ref{fig:perftest-4} and \ref{fig:perftest-5}). We ran the following performance tests within our proof of concept using a 10MB, 100MB, 250MB, 500MB and a 1000MB data object. We performed the performance tests ten times for each object size and protocol and are processed in the illustrated boxplots. The different object sizes were chosen in order to determine if there is a certain trend between the object size and performance. This performance trend is illustrated in figure \ref{fig:perftest-6} and shows the average of the test runs. We can observe that NDN over UDP outperforms the TCP/IP connection used for retrieving data objects from the Handle PID server that we setup with all chosen object sizes. Furthermore, NDN over TCP outperforms NDN over UDP. This result correlates with the research done by Lim et al., as discussed in section \ref{introduction-related-work-ndn}. The line chart shown in figure \ref{fig:perftest-6} shows that the lines converge after the 250MB mark. Which means that the relative difference between NDN and TCP/IP becomes smaller with object sizes bigger than 250MB. This is due to NDNs nature of handling big object sizes. These can cause a performance problem, because the cost of retransmission when interests are retransmitted (or re-issued) becomes unsustainably high \cite{ndn-objects}. % Their research concludes that NDN provided performance improvements compared to classical climate data delivery techniques based on TCP/IP. In addition to this, NDN over TCP demonstrated a more reliable and faster performance due to the allowance of larger dynamic window sizes and congestion control.
 
 \begin{figure}[H]
 \centering
@@ -65,7 +99,37 @@ We ran the performance tests within our proof of concept using a 10MB and 100MB 
 \label{fig:perftest-2}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{Images/ndn_tcpip_250_grey.png}
+\caption{Performance test TCP/IP vs NDN with a 250MB object.}
+\label{fig:perftest-3}
+\end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{Images/ndn_tcpip_500_grey.png}
+\caption{Performance test TCP/IP vs NDN with a 500MB object.}
+\label{fig:perftest-4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{Images/ndn_tcpip_1000_grey.png}
+\caption{Performance test TCP/IP vs NDN with a 1000MB object.}
+\label{fig:perftest-5}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{Images/linechart5.png}
+\caption{Object size to performance relationship.}
+\label{fig:perftest-6}
+\end{figure}
+
+When observing the results, we can see that it takes roughly more than four seconds to retrieve a 100MB object over TCP/IP, which is not optimal as a 1Gbps Ethernet connection is used for the benchmarks. 
+It seems that our Handle PID server, which is set up with \texttt{cordra-1.0.7} software is the bottleneck. Since we got faster results when retrieving the Linux kernel for example. We can retrieve a 102MB Linux kernel\footnote{https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.8.tar.xz} in ${\sim}1$ second within a container in our proof of concept. This seems to be faster than the default NDN settings with a MTU of 4400. When raising the MTU to 8800 in NDN, to reduce the number of signatures needed to transmit a object, we can observe that the average time to retrieve an object through NDN takes less than a second (${\sim}850$ milliseconds). 
+When retrieving a object over NDN UDP with a MTU set to 8800, we cannot observe any difference with our results shown in figure \ref{fig:perftest-2} with a MTU of 4400 over NDN UDP, this may be caused by UDP's limitations in NDN as described in section \ref{introduction-related-work-ndn}.
 
 
 % TO-DO: 
