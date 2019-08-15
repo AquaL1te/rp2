@@ -1,8 +1,8 @@
 \section{Architecture}
 %       - Give a name of your solution:  NDN virtual function based 
-% planning for interoperable PID (?)
+% planning for interoperable \gls{pid} (?)
 
-%       - Explain its components: 1)  interoperable PID / NDN mapping 
+%       - Explain its components: 1)  interoperable \gls{pid} / NDN mapping 
 % function? 2) NDN planner, 3) NDN controller? .....
 
 %       - Sequence diagram: how they interact
@@ -29,19 +29,19 @@ Furthermore, for the following hardware requirements a baseline was determined b
 %
 
 Due to the use of NDN, we need interoperability of PIDs with the NDN namespace. For 
-We will propose a design, which achieves PID interoperability with the NDN namespace and makes it feasible to add future PID types.
+We will propose a design, which achieves \gls{pid} interoperability with the NDN namespace and makes it feasible to add future \gls{pid} types.
 
 
 
-Our design is based on related work done by Karakannas \cite{icn-bd}, by avoiding the PID to NDN translation on client side \cite{icn-bd}. The pattern matching method was based on related work by Mousa for identifying different PID type schemas \cite{ndn-app-aware}. The research done by Olschanowsky et. al. was used for deriving NDN names from metadata \cite{ndn-man}.
-We will reimplement the principles of NaaS4PID in order to demonstrate the PID interoperability extensibility feature.
+Our design is based on related work done by Karakannas \cite{icn-bd}, by avoiding the \gls{pid} to NDN translation on client side \cite{icn-bd}. The pattern matching method was based on related work by Mousa for identifying different \gls{pid} type schemas \cite{ndn-app-aware}. The research done by Olschanowsky et. al. was used for deriving NDN names from metadata \cite{ndn-man}.
+We will reimplement the principles of NaaS4PID in order to demonstrate the \gls{pid} interoperability extensibility feature.
 We combine the aforementioned related work and extended it with an extendable interoperability feature. The proposed design for our solution will be further discussed in \ref{planning-deploying}.
 Our design adheres to the following principles, which will be discussed in more detail in section \ref{pid-poc}.
  
 \begin{itemize}
     \item{Translation is transparent to the user.}
-    \item{Support for multiple PID types.}
-    \item{Extensible with future PID types with different naming schemas.}
+    \item{Support for multiple \gls{pid} types.}
+    \item{Extensible with future \gls{pid} types with different naming schemas.}
 \end{itemize}
 
 These principles are all functions within our design. In section \ref{planning-architecture}, we will discuss the components which are responsible for these functions.
@@ -61,26 +61,26 @@ Our high-level network design (figure \ref{fig:high-level-network-design}) conta
 
 %At the 
 
-As discussed in \ref{planning-requirements}, the functions we described need to be implemented in components. Our proposed design to be implemented in a proof of concept consists of the following components, each with their own functionality; the PID server, the PID to NDN gateway and the client. In the high-level network design as illustrated in figure \ref{fig:high-level-network-design}, the client is interpreted as the consumer. The PID server is interpreted as the producer, as long as the object is not already cached in NDN. Which then NDN acts as the producer. The consumer retrieves the object via the IP underlay from the PID server if the object is not cached in NDN already. In our proof of concept, these components are conceptually part of the NDN we have setup. The general idea is that a user enters a PID of the object that the user want to retrieve at the client and gets back the requested object as shown in figure \ref{fig:sdc_model}. The retrieval of an object depends if the object is already published in the NDN or not, which is further described in sections \ref{client} and \ref{gw}.
+As discussed in \ref{planning-requirements}, the functions we described need to be implemented in components. Our proposed design to be implemented in a proof of concept consists of the following components, each with their own functionality; the \gls{pid} server, the \gls{pid} to NDN gateway and the client. In the high-level network design as illustrated in figure \ref{fig:high-level-network-design}, the client is interpreted as the consumer. The \gls{pid} server is interpreted as the producer, as long as the object is not already cached in NDN. Which then NDN acts as the producer. The consumer retrieves the object via the IP underlay from the \gls{pid} server if the object is not cached in NDN already. In our proof of concept, these components are conceptually part of the NDN we have setup. The general idea is that a user enters a \gls{pid} of the object that the user want to retrieve at the client and gets back the requested object as shown in figure \ref{fig:sdc_model}. The retrieval of an object depends if the object is already published in the NDN or not, which is further described in sections \ref{client} and \ref{gw}.
 
 
 
-%\subsection{Design for PID interoperability}
-%In this section, we implemented the following in our proof of concept to answer our research question (section \ref{introduction-research-question}). We will propose a design, which achieves PID interoperability with the NDN namespace and makes it feasible to add future PID types. Our design is based on related work done by Karakannas \cite{icn-bd}, by avoiding the PID to NDN translation on client side \cite{icn-bd}. The pattern matching method was based on related work by Mousa for identifying different PID type schemas \cite{ndn-app-aware}. The research done by Olschanowsky et. al. was used for deriving NDN names from metadata \cite{ndn-man}.
-%We have reimplemented the principles of NaaS4PID in order to demonstrate the PID interoperability extensibility feature.
+%\subsection{Design for \gls{pid} interoperability}
+%In this section, we implemented the following in our proof of concept to answer our research question (section \ref{introduction-research-question}). We will propose a design, which achieves \gls{pid} interoperability with the NDN namespace and makes it feasible to add future \gls{pid} types. Our design is based on related work done by Karakannas \cite{icn-bd}, by avoiding the \gls{pid} to NDN translation on client side \cite{icn-bd}. The pattern matching method was based on related work by Mousa for identifying different \gls{pid} type schemas \cite{ndn-app-aware}. The research done by Olschanowsky et. al. was used for deriving NDN names from metadata \cite{ndn-man}.
+%We have reimplemented the principles of NaaS4PID in order to demonstrate the \gls{pid} interoperability extensibility feature.
 %We combined the aforementioned related work and extended it with an extendable interoperability feature. The proposed design for our solution is illustrated in figure \ref{fig:sdc_model}.
 %Our design adheres to the following principles, which will be discussed in more detail in this section.
  
 %\begin{itemize}
 %    \item{Translation is transparent to the user.}
-%    \item{Support for multiple PID types.}
-%    \item{Extensible with future PID types with different naming schemas.}
+%    \item{Support for multiple \gls{pid} types.}
+%    \item{Extensible with future \gls{pid} types with different naming schemas.}
 %\end{itemize}
 
 %\begin{figure}[H]
 %\centering
 %\includegraphics[width=\textwidth]{Images/PIDtoNDN10.png}
 %\caption{NDN virtual function based 
-%planning for achieving PID interoperability}
+%planning for achieving \gls{pid} interoperability}
 %\label{fig:sdc_model}
 %\end{figure}

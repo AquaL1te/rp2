@@ -9,7 +9,7 @@
 
 % add the part about caching strategies and why we used the general recommendation and not the one for big data
 % Initially, we started researching the state of the art technologies for creating our design. We came to the conclusion that NDN would fit the technical challenges we had to work out.
-% After, we started researching PID interoperability with the NDN namespace and found out that our principles can be adhered as discussed in section \ref{pid-poc}.
+% After, we started researching \gls{pid} interoperability with the NDN namespace and found out that our principles can be adhered as discussed in section \ref{pid-poc}.
 
 
 
@@ -25,15 +25,15 @@
 
 
 
-Our research investigated solutions for the increasing trend of data producers and consumers in research clouds. Our methods are designed to be used for large research clouds. However, the methods were only tested in a small scale proof of concept. Therefore, further experimentation is needed on a larger scale to fully prove our methods. Furthermore, data producers and consumers can make use of different PID standards, in order to retrieve this data by name in NDN, a compatible translation was needed between these namespaces. The solution we developed for this problem is designed to be easily extensible for new PID types. 
+Our research investigated solutions for the increasing trend of data producers and consumers in research clouds. Our methods are designed to be used for large research clouds. However, the methods were only tested in a small scale proof of concept. Therefore, further experimentation is needed on a larger scale to fully prove our methods. Furthermore, data producers and consumers can make use of different \gls{pid} standards, in order to retrieve this data by name in NDN, a compatible translation was needed between these namespaces. The solution we developed for this problem is designed to be easily extensible for new \gls{pid} types. 
 
 Research clouds are in general a federated cloud, where each federation is responsible for its own budget and infrastructure. However, our solution assumes central control over the NDN. Our solution could be approached in several ways. The solutions could be deployed as an internal data-sharing platform per infrastructure and interconnect those NDNs, thus maintaining the federated model. Or, it could be deployed as a third party data-sharing platform, where one can deploy and operate the NDN for multiple infrastructures. Our research did not explore these subjects. However, it provides the technical possibilities to deploy these solutions in such a manner.
 
 % ANAS - SOME CONCLUSIONS SUMMERIZED ABOUT THE PEFORMANCE MEASUREMENTS - IS NDN PROMISING OR NOT? FURTHER RESEARCH IS DISCUSSED BELOW
 
-% We have developed a method of deployment to make NDN scalable from a single infrastructure description. This was done by utilizing the properties of TOSCA templates, cloud and virtualization techniques. Furthermore, data producers and consumers can make use of different PID standards, in order to retrieve this data by name in NDN, a compatible translation was needed between these namespaces. The solution we developed for this problem is designed to be easily extensible for new PID types.
+% We have developed a method of deployment to make NDN scalable from a single infrastructure description. This was done by utilizing the properties of TOSCA templates, cloud and virtualization techniques. Furthermore, data producers and consumers can make use of different \gls{pid} standards, in order to retrieve this data by name in NDN, a compatible translation was needed between these namespaces. The solution we developed for this problem is designed to be easily extensible for new \gls{pid} types.
 
-% presented a method and design for sharing digital objects using NDN with support for multiple PID providers. Our findings give insight for distributed infrastructures that manage large and diverse sets of data such as SeaDataCloud and CS3.
+% presented a method and design for sharing digital objects using NDN with support for multiple \gls{pid} providers. Our findings give insight for distributed infrastructures that manage large and diverse sets of data such as SeaDataCloud and CS3.
 
 Based on our findings we acknowledge the following subjects for further research. As described in section \ref{overview-tosca}, TOSCA orchestrators are still in development. Therefore, more experimentation is needed when these orchestrators become more mature. This can give more insight in the flexibility and utilization of these orchestrators. As discussed in section \ref{planning-poc}, due to the nature of Kubernetes, pods are deployed based on the resource requirements of a pod and the resource availability inside a cluster. Pods that run NDN functions are not only interested in Kubernetes resources, but their true value is mainly determined on locality. This is due to the distributed nature of NDN, which depends on in-network caching along the network path between data producers and consumers. If Kubernetes doesn't deploy a pod where NDN resources are needed, then human intervention is needed to specify on which Kubernetes node a pod must run. Therefore, if Kubernetes could be extended with the intelligence of also NDN's resource needs, it could deploy pods automatically in a certain geographical area in order to increase cache hits. Furthermore, the NDN faces were configured manually as well, this was due to the lack of mature NDN routing protocols. However there are two promising routing protocols in development; \gls{ospfn} by Lan Wang et. al. \cite{ndn-ospfn1, ndn-ospfn2} and \gls{nlsr} \cite{nlsr}. With a routing protocol, the NDN management process would become less complicated and more resilient.
 
@@ -46,7 +46,7 @@ Furthermore, more performance measurements and analyses is needed to gather a be
 % This part needs some tweaking maybe (already tweaked it a bit)
 %For benchmarking, the tool ndn-traffic-generator\footnote{https://github.com/named-data/ndn-traffic-generator} can be used to generate random interest and data traffic in an NDN network. Although this tool only allows a fixed pipeline size (\texttt{X} amount of packets per second) and does not implement congestion control. Thus it is not very useful when comparing against TCP/IP \cite{ndnput-mem}. The tool \texttt{ndncatchunks} that we used in our proof of concept for requesting objects from NDN, is a more realistic scenario than generating random traffic as this does incorporates congestion control, which makes it more useful for comparing against TCP/IP.
 
-The PID interoperability solution we developed exists outside of the NDN source code. For the best application of this functionality, we recommend the integration of these interoperability functionalities into the native NDN source code. This would remove the need to run a translation gateway.
+The \gls{pid} interoperability solution we developed exists outside of the NDN source code. For the best application of this functionality, we recommend the integration of these interoperability functionalities into the native NDN source code. This would remove the need to run a translation gateway.
 
 % Implementing routing protocols for NDN in our proof of concept is also worth testing. As in  our proof of concept, we manually configure all the routes.
 
