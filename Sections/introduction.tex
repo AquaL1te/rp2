@@ -5,39 +5,6 @@
 \label{introduction-background}
 % What is SeaDataCloud's exact problem? Make the problem clear so that our solution fits the problem. Try to look at it from all angles, like an os3 teacher would
 
-
-One of the technical challenges is the distribution of the data across the communities. The issue is that the data is distributed by different data providers across these communities, each with their own
-naming schema. Therefore, interoperability across different naming schemas has to be achieved. Users should be able to request data across these communities, without having to cope with different schemas for data they request. Another technical challenge is to serve this data to a large number of users. 
-
-The current approach can potentially cause congestion and delays with
-many concurrent users consuming data from the highlighted distributed data infrastructures. On top of that, the large number of users is still growing. In section \ref{tech-oview} we highlight state of the art technologies to deal with these challenges. We will create a design which achieves interoperability across different naming schemas and alleviates network latency and congestion.
-
-SeaDataNet is a distributed marine data infrastructure network for managing the large and diverse data sets collected by the oceanographic fleets and the automatic observation systems.
-SeaDataCloud's current infrastructure is a centralized solution, as the current cache is a central catalogue which duplicates the entire data repository. Data consumers use host-to-host-connections (TCP/IP) to pull data from this cache, which could cause congestion with many concurrent data consumers.
-Their current infrastructure assigns a PID, which can be of any type, to each object that is pushed into the cache to uniquely identify an object. Data providers are not bound to a specific PID, thus different PID types are used. Each with their own naming schema.
- 
-The CS3 community has been growing for the last three years and currently includes around hundred institutions and companies from around the world. One of the most important topics and technical challenge of CS3 services is interoperability of the different naming schemes being used to identify data. Development of interoperability protocols is important to provide data sharing capabilities for all users across all institutions in the field of education and research.
-
-
-%Large data infrastructures such as SeaDataNet and CS3 are responsible for managing diverse data sets across the globe. These data sets are made available to a large number of users. In this section we will discuss these data infrastructures and the technical challenges they face at the moment.
-
-%SeaDataNet is a distributed marine data infrastructure network for managing the large and diverse data sets collected by the oceanographic fleets and the automatic observation systems. Reliable and fast marine data access is of importance for marine research and required for various studies, which varies from climate change research to off shore engineering. SeaDataNet started the SeaDataCloud project in 2016. Their aim is to advance and increase the usage of SeaDataNet's services by adopting cloud and high performance computing technology for better performance \cite{sdc}. SeaDataNet connects together more than a hundred data centres from eight European marine institutes in different geographical domains, aiming at preserving and making reusable marine observations ranging from ocean physics to chemistry and biology.
-
-%SeaDataCloud's current infrastructure is a centralized solution, as the current cache is a central catalogue which duplicates the entire data repository. Data consumers use host-to-host-connections (TCP/IP) to pull data from this cache, which could cause congestion with many concurrent data consumers. Data is pushed into SeaDataCloud's infrastructure by different data providers. Their current infrastructure is shown in figure \ref{fig:sdc_cur} and assigns a PID, which can be of any type, to each object that is pushed into the cache to uniquely identify an object. Data providers are not bound to a specific PID, thus different PID types are used. Each with their own naming schema.
-
-%CS3 is another case of a community that brings together users, researchers, developers, technology- and service providers of on-premise cloud services as well as large cloud service companies. CS3 is dedicated to emerging cloud synchronization and sharing services to enable on-premise file sync/share services for researchers to share, transfer and synchronize data in a simple but powerful way.
-
-%The CS3 community has been growing for the last three years and currently includes around hundred institutions and companies from around the world. One of the most important topics and technical challenge of CS3 services is interoperability of the different naming schemes being used to identify data. Development of interoperability protocols is important to provide data sharing capabilities for all users across all institutions in the field of education and research.
-
-%As mentioned, these data infrastructures cope with technical challenges at the moment. One of the technical challenges is the distribution of the data across the communities. The issue is that the data is distributed by different data providers across these communities, each with their own naming schema. Therefore, interoperability across different naming schemas has to be achieved. Users should be able to request data across these communities, without having to cope with different schemas for data they request. Another technical challenge is to serve this data to a large number of users. The current approach can potentially cause congestion and delays with many users consuming data from the highlighted distributed data infrastructures. On top of that, the large number of users is still growing. In section \ref{tech-oview} we highlight state of the art technologies to deal with these challenges. We will create a design which achieves interoperability across different naming schemas and alleviates network latency and congestion.
-
-%\begin{figure}[H]
-%\centering
-%\includegraphics[scale=0.6]{Images/SDC_current.png}
-%\caption{SeaDataCloud's current infrastructure.}
-%\label{fig:sdc_cur}
-%\end{figure}
-
 Research clouds publish datasets from distributed sources, identified by a \gls{pid} (more details in section \ref{pid-intr}). These datasets are served to larger research communities, not accessed via e.g. a simple web portal like traditional internet objects on the web. Instead these requests are processed by e.g. a data catalog of the federated research cloud. Therefore, research clouds face the challenge of identifying distributed data in a federated cloud, provide data provenance and provide a scalable service to serve many users that request large datasets.
 
 Research clouds face a trend of increased data production and consumption. This general trend in research clouds calls for a data distribution solution that better supports the scale and complexity. In this section we will briefly discuss the technical challenges.
