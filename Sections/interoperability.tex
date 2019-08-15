@@ -49,7 +49,7 @@ In the case that the object is already published in NDN, the gateway server only
 Retrieving an object either from the \gls{pid} server or from \gls{ndn} should happen transparently for the user. It is possible to accomplish this by combining the code for retrieving the object from the \gls{pid} server with the code we have used to retrieve the object from \gls{ndn} at the client side. Furthermore, a conditional statement needs to be added at the gateway to check if the object is already published in \gls{ndn}. This is further described in section \ref{gw}.
 %can be done with the \texttt{ndnping} tool \cite{ndn-tools} for example as described in section \ref{gw}.
 
-As a result, if transparency is implemented the user might not even be aware of an \gls{ndn}. The user only specifies a \gls{pid} as input for the client, without specifying the link of the web resolver that resolves the PID. The user gets redirected automatically by the client to either the \gls{pid} server or \gls{ndn}. No further user input is needed as everything is taken care of by the gateway, which will also be discussed in section \ref{gw}.
+As a result, if transparency is implemented the user might not even be aware of an \gls{ndn}. The user only specifies a \gls{pid} as input for the client, without specifying the link of the web resolver that resolves the \gls{pid}. The user gets redirected automatically by the client to either the \gls{pid} server or \gls{ndn}. No further user input is needed as everything is taken care of by the gateway, which will also be discussed in section \ref{gw}.
 %Unlike previous designs, which require user input after the client has translated the \gls{pid} to \gls{ndn} name \cite{ndn-app-aware}. 
 
 \subsubsection{Gateway}\label{gw}
@@ -72,7 +72,7 @@ Afterwards, the requested data chunk is stored in \gls{ndn} with the parameter a
 Furthermore, the web resolver link is also stripped after translation.
 
 The web resolver link is not used for deriving the \gls{ndn} name.
-By excluding the web resolver link from the \gls{ndn} name, duplications will not occur in \gls{ndn} as the \gls{ndn} name is only derived from the PID. A \gls{pid} always translates to the same name in \gls{ndn} this way. 
+By excluding the web resolver link from the \gls{ndn} name, duplications will not occur in \gls{ndn} as the \gls{ndn} name is only derived from the \gls{pid}. A \gls{pid} always translates to the same name in \gls{ndn} this way. 
 If the \gls{pid} object is moved to another web resolver, only the link of the web resolver has to be updated in the gateway. 
 
 In listing \ref{lst:hdl_ndn}, the translation of a Handle \gls{pid} to an \gls{ndn} name is shown, the Handle name is hierarchically divided into its \gls{pid} type, authority and sub-authority.
@@ -167,7 +167,7 @@ Translation is achieved by first recognizing the \gls{pid} type based on pattern
 %Retrieving an object either from the \gls{pid} server or from \gls{ndn} should happen transparently for the user. It is possible to accomplish this by combining the code for retrieving the object from the \gls{pid} server with the code we have used to retrieve the object from \gls{ndn} at the client side. Furthermore, a conditional statement needs to be added at the gateway to check if the object is already published in \gls{ndn}. This is further described in section \ref{gw}.
 %can be done with the \texttt{ndnping} tool \cite{ndn-tools} for example as described in section \ref{gw}.
 
-%As a result, if transparancy is implemented the user might not even be aware of an \gls{ndn} network. The user only specifies a \gls{pid} as input for the client, without specifying the link of the web resolver that resolves the PID. The user gets redirected automatically by the client to either the \gls{pid} server or \gls{ndn} network. No further user input is needed as everything is taken care of by the gateway, which will be discussed below in section \ref{gw}.
+%As a result, if transparancy is implemented the user might not even be aware of an \gls{ndn} network. The user only specifies a \gls{pid} as input for the client, without specifying the link of the web resolver that resolves the \gls{pid}. The user gets redirected automatically by the client to either the \gls{pid} server or \gls{ndn} network. No further user input is needed as everything is taken care of by the gateway, which will be discussed below in section \ref{gw}.
 %Unlike previous designs, which require user input after the client has translated the \gls{pid} to \gls{ndn} name \cite{ndn-app-aware}. 
 
 %\subsubsection{Gateway}\label{gw}
@@ -188,7 +188,7 @@ Translation is achieved by first recognizing the \gls{pid} type based on pattern
 %To translate the matched \gls{pid} type to an \gls{ndn} name, one has to take into account the schema of the \gls{pid} type and the hierarchical way it has to be divided in. In our proof of concept a prefix is added before the \gls{pid} name, for deriving an \gls{ndn} name from each discussed \gls{pid} type. Such as \texttt{/ndn/handle} for Handle objects, \texttt{/ndn/doi} for \gls{doi} objects and \texttt{/ndn/urn} for \gls{urn} objects. This complies with the related work we have discussed. The delimiters of the \gls{pid} types are replaced by a slash \texttt{("/")}. In PANGAEA, specific columns and parameters can be requested to retrieve a particular part from an object\footnote{\url{https://doi.pangaea.de/10.1594/PANGAEA.842227&columns=1,,2,3&filterParameterValue=Station,TARA_100}}. The columns and parameters can also be translated to an \gls{ndn} name\footnote{\url{/ndn/doi/10.1594/PANGAEA.842227/attrib+ndn+1,2,3+Station,TARA_100}} \cite{ndn-app-aware}. This shows that not only the delimiters are replaced to translate it into an \gls{ndn} name. This is done by hierarchically dividing it in \texttt{/attrib+ndn} and appending the columns and parameters with a plus \texttt{("+")} (where the requested columns and parameters are separated by a comma \texttt{(","))}. Furthermore, the web resolver link is also stripped after translation.
 
 %The web resolver link is not used for deriving the \gls{ndn} name.
-%By excluding the web resolver link from the \gls{ndn} name, duplications will not occur in \gls{ndn} as the \gls{ndn} name is only derived from the PID. A \gls{pid} always translates to the same name in \gls{ndn} this way. 
+%By excluding the web resolver link from the \gls{ndn} name, duplications will not occur in \gls{ndn} as the \gls{ndn} name is only derived from the \gls{pid}. A \gls{pid} always translates to the same name in \gls{ndn} this way. 
 %If the \gls{pid} object is moved to another web resolver, only the link of the web resolver has to be updated in the gateway. 
 
 %In listing \ref{lst:hdl_ndn}, the translation of a Handle \gls{pid} to an \gls{ndn} name is shown, the Handle name is hierarchically divided into its \gls{pid} type, authority and sub-authority.
