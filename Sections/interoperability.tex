@@ -177,7 +177,7 @@ Translation is achieved by first recognizing the \gls{pid} type based on pattern
 %The gateway is responsible for translating a \gls{pid} to \gls{ndn} name and checks if the requested object is already published in NDN. 
 %The first responsibility is translating the \gls{pid} it receives from the client to an \gls{ndn} name, which can be of any \gls{pid} type. In our proof of concept we have implemented the Handle \gls{pid} type schema of the Handle \gls{pid} server we setup. In addition to this, we have also implemented the \gls{urn} \gls{pid} type schema of the national library of the Netherlands, as well as the \gls{doi} type schema of PANGAEA. The gateway receives a \gls{pid} from the client, without the link of the corresponding web resolver of the \gls{pid} type. Based on pattern matching of the \gls{pid} type schema\footnote{\url{https://github.com/AquaL1te/rp2/blob/master/Scripts/pid_server.py\#L58-L62}}, the gateway detects what kind of \gls{pid} type it has to deal with. Then, the associated function is called to translate the \gls{pid} to \gls{ndn} name\footnote{\url{https://github.com/AquaL1te/rp2/blob/master/Scripts/pid_server.py\#L17-L37}} and appends the corresponding link of the web resolver of the \gls{pid} type it receives. 
 %Pattern matching is done based on the patterns of 
-%The patterns of most standardized \gls{pid} type schemas are maintained in the ePIC DTR \cite{dtr} and can be used for implementation in the gateway we propose. 
+%The patterns of most standardized \gls{pid} type schemas are maintained in the ePIC \gls{dtr} \cite{dtr} and can be used for implementation in the gateway we propose. 
 
 %Naming:
 %Furthermore, the second responsibility of the gateway is to check if the object is already published in NDN.
